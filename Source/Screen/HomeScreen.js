@@ -1,25 +1,92 @@
-import { View, Text, ScrollView, Dimensions } from 'react-native'
-import React from 'react'
-import useColorStyle from '../Styles/ColorStyle';
+// import { View, Text, ScrollView, Dimensions, ImageBackground, Image } from 'react-native'
+// import React from 'react'
+// import useColorStyle from '../Styles/ColorStyle';
 
-export default function HomeScreen() {
+// export default function HomeScreen() {
+//     return (
+//         <ScrollView horizontal style={{ backgroundColor: colorStyle.mainBg }}>
+//             <View style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').height * 0.9 }}>
+//                 <Watch/>
+//             </View>
+//         </ScrollView>
+//     )
+// }
+import React, { useRef } from 'react';
+import { View, Animated, Text, Dimensions } from 'react-native';
+import Watch from '../Components/Watch';
+import useColorStyle from '../Styles/ColorStyle';
+import Grid1X1 from '../Components/Grid1X1';
+import Grid1X2 from '../Components/Grid1X2';
+import Grid2X2 from '../Components/Grid2X2';
+import Grid3X2 from '../Components/Grid3X2';
+import Grid2X1 from '../Components/Grid2X1';
+
+const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
+
+const HomeScreen = () => {
+    const scrollA = useRef(new Animated.Value(0)).current;
     const colorStyle = useColorStyle();
     return (
-        <ScrollView horizontal style={{ backgroundColor: colorStyle.mainbg }}>
-            <View className='items-center justify-center' style={{ height: Dimensions.get('window').height * 1, width: Dimensions.get('window').height * 0.9 }}>
-                <View className=" rotate-12 flex-row">
-                    <View style={{ height: Dimensions.get('window').height * 0.8, width: Dimensions.get('window').height * 0.4 }} className='overflow-hidden'>
-                        <View style={{ height: Dimensions.get('window').height * 0.8, width: Dimensions.get('window').height * 0.8 }} className=' rounded-full bg-slate-200'>
-
+        <View>
+            <Animated.ScrollView
+                horizontal
+                onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { x: scrollA } } }],
+                    { useNativeDriver: true },
+                )}
+                scrollEventThrottle={16}
+                style={{ backgroundColor: colorStyle.mainBg }}
+            >
+                <View style={styles.bannerContainer}>
+                    <Animated.View style={styles.banner(scrollA)}>
+                        <View style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').height * 0.9 }}>
+                            <Watch />
                         </View>
-                    </View>
-                    <View style={{ height: Dimensions.get('window').height * 0.8, width: Dimensions.get('window').height * 0.4 }} className='rotate-180 overflow-hidden'>
-                        <View style={{ height: Dimensions.get('window').height * 0.8, width: Dimensions.get('window').height * 0.8 }} className=' rounded-full bg-slate-500'>
-
-                        </View>
-                    </View>
+                    </Animated.View>
                 </View>
-            </View>
-        </ScrollView>
-    )
-}
+
+                <View style={{ padding: 14, columnGap: 12 }} className='flex-row justify-between'>
+                    <View className='justify-between'>
+                    <Grid1X1 />
+                    <Grid1X1 />
+                    </View>
+                    <Grid1X2 />
+                   
+                    <Grid3X2 />
+                    <Grid2X1 />
+                </View>
+               
+                {/* <Grid2X2 /> */}
+            </Animated.ScrollView>
+        </View>
+    );
+};
+
+const styles = {
+    bannerContainer: {
+        marginLeft: -1000,
+        paddingLeft: 1000,
+        alignItems: 'center',
+        overflow: 'hidden',
+    },
+    banner: scrollA => ({
+        height: '100%',
+        width: BANNER_W,
+        transform: [
+            {
+                translateX: scrollA.interpolate({
+                    inputRange: [-BANNER_W, 0, BANNER_W, BANNER_W + 1],
+                    outputRange: [-BANNER_W / 2, 0, BANNER_W * 0.75, BANNER_W * 0.75],
+                }),
+            },
+            {
+                scale: scrollA.interpolate({
+                    inputRange: [-BANNER_W, 0, BANNER_W, BANNER_W + 1],
+                    outputRange: [2, 1, 0.5, 0.5],
+                }),
+            },
+        ],
+    }),
+};
+
+export default HomeScreen;

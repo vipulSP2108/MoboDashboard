@@ -6,9 +6,10 @@ function useColorStyle() {
     const colors = {
         diffBlue: '#37FEF6',
         diffYellow: '#FFB364',
-        mainbg: darkMode ? '#000000' : '#FFFFFF',
-        subbg: '#1E2022',
-        textMain: darkMode ? '#FFFFFF' : '#000000',
+        mainBg: darkMode ? '#000000' : '#FFFFFF',
+        subBg: '#1E2022',
+        mainText: darkMode ? '#FFFFFF' : '#000000',
+        subText: '#58595A',
     };
 
     return colors;

@@ -23,7 +23,7 @@ function CostomDrawerNavigator(props) {
             </DrawerContentScrollView>
             <View className=' rounded-xl' style={{alignItems: 'center'}}>
                 <TouchableOpacity style={{ borderRadius: 4, marginBottom: 10, alignItems: 'center', justifyContent: 'center', width: 40, height: 45, alignContent: 'center'}}>
-                    <Ionicons name='wallet' size={25} color={colorStyle.textMain} />
+                    <Ionicons name='wallet' size={25} color={colorStyle.mainText} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -35,7 +35,7 @@ export default function DrawerNavigator() {
   return (
     <NavigationContainer>
       {/* drawerActiveBackgroundColor: null, drawerActiveTintColor: colorStyle.diffBlue, drawerInactiveTintColor: colorStyle.textMain, drawerStyle: { width: 60, marginTop: -20, backgroundColor: colorStyle.mainbg, justifyContent: 'space-evenly' },  */}
-      <Drawer.Navigator drawerContent={props => <CostomDrawerNavigator {...props}/>} screenOptions={{ drawerActiveBackgroundColor: null, drawerType: 'permanent', drawerActiveTintColor: colorStyle.diffBlue, drawerInactiveTintColor: colorStyle.textMain, headerShown: false, drawerStyle: { width: 60, backgroundColor: colorStyle.mainbg} }} initialRouteName="Home">
+      <Drawer.Navigator drawerContent={props => <CostomDrawerNavigator {...props}/>} screenOptions={{ drawerActiveBackgroundColor: null, drawerType: 'permanent', drawerActiveTintColor: colorStyle.diffBlue, drawerInactiveTintColor: colorStyle.mainText, headerShown: false, drawerStyle: { width: 60, backgroundColor: colorStyle.mainBg} }} initialRouteName="Home">
         <>
         {/* options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: ProfitIcon2 }} */}
           <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: HomeScreen_Icon }} />
