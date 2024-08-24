@@ -11,7 +11,7 @@
 //         </ScrollView>
 //     )
 // }
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions } from 'react-native';
 import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
@@ -26,8 +26,18 @@ const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner wid
 const HomeScreen = () => {
     const scrollA = useRef(new Animated.Value(0)).current;
     const colorStyle = useColorStyle();
+
+    const [parentHeight, setParentHeight] = useState(0);
+    const parentRef = useRef(null);
+
+    const handleLayout = (event) => {
+        const { height } = event.nativeEvent.layout;
+        setParentHeight(height);
+    };
+
     return (
         <View>
+            {console.log(parentHeight, Dimensions.get('window').height)}
             <Animated.ScrollView
                 horizontal
                 onScroll={Animated.event(
@@ -45,18 +55,13 @@ const HomeScreen = () => {
                     </Animated.View>
                 </View>
 
-                <View style={{ padding: 14, columnGap: 12 }} className='flex-row justify-between'>
-                    <View className='justify-between'>
+                <View onLayout={handleLayout} ref={parentRef} style={{ margin: 14, columnGap: 12 }} className='flex-row justify-between'>
                     <Grid1X1 />
-                    <Grid1X1 />
-                    </View>
                     <Grid1X2 />
-                   
-                    <Grid3X2 />
-                    <Grid2X1 />
+                    <Grid2X1 width={parentHeight} />
+                    <Grid2X2 />
+                    <Grid3X2 width={parentHeight} />
                 </View>
-               
-                {/* <Grid2X2 /> */}
             </Animated.ScrollView>
         </View>
     );
