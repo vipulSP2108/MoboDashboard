@@ -1,17 +1,6 @@
-// import { View, Text, ScrollView, Dimensions, ImageBackground, Image } from 'react-native'
-// import React from 'react'
-// import useColorStyle from '../Styles/ColorStyle';
+const setGap = 2 
 
-// export default function HomeScreen() {
-//     return (
-//         <ScrollView horizontal style={{ backgroundColor: colorStyle.mainBg }}>
-//             <View style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').height * 0.9 }}>
-//                 <Watch/>
-//             </View>
-//         </ScrollView>
-//     )
-// }
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions } from 'react-native';
 import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
@@ -20,10 +9,19 @@ import Grid1X2 from '../Components/Grid1X2';
 import Grid2X2 from '../Components/Grid2X2';
 import Grid3X2 from '../Components/Grid3X2';
 import Grid2X1 from '../Components/Grid2X1';
+import { GlobalStateContext } from '../Context/GlobalStateProvider';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
 const HomeScreen = () => {
+    const { oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
+
+    useEffect(() => {
+        setOneGap(7 * setGap);
+        setOneCell((parentHeight / 4) - (4 * setGap));
+        console.log(parentHeight, oneCell, oneGap)
+    }, [parentHeight, setGap, setOneGap, setOneCell]);
+
     const scrollA = useRef(new Animated.Value(0)).current;
     const colorStyle = useColorStyle();
 
@@ -37,7 +35,6 @@ const HomeScreen = () => {
 
     return (
         <View>
-            {console.log(parentHeight, Dimensions.get('window').height)}
             <Animated.ScrollView
                 horizontal
                 onScroll={Animated.event(

@@ -1,13 +1,20 @@
 import { View, Text, Image, ImageBackground } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
 
 export default function Watch() {
-    const date = new Date();
+    const [date, setDate] = useState(new Date());
     const { fontFamilies } = useContext(GlobalStateContext);
     const fontstyles = FontStyles();
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          setDate(new Date());
+        }, 1000);
+        return () => clearInterval(intervalId);
+      }, []);
 
     if (!fontFamilies) {
         return null;

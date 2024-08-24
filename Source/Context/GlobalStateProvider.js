@@ -4,7 +4,9 @@ export const GlobalStateContext = createContext();
 import { useFonts } from 'expo-font';
 
 export default GlobalStateProvider = ({ children }) => {
-    const [fontFamilies, setFontFamilies] = useState({});
+  
+  // Fonts
+  const [fontFamilies, setFontFamilies] = useState({});
 
   const [fontsLoaded] = useFonts({
     'Zain_Black': require('./../../assets/fonts/Zain/Zain-Black.ttf'),
@@ -42,8 +44,12 @@ export default GlobalStateProvider = ({ children }) => {
     }
   }, [fontsLoaded]);
 
+  // oneGap and oneCell
+  const [oneGap, setOneGap] = useState();
+  const [oneCell, setOneCell] = useState();
+
   return (
-    <GlobalStateContext.Provider value={{ fontsLoaded, fontFamilies }}>
+    <GlobalStateContext.Provider value={{ oneGap, setOneGap, oneCell, setOneCell, fontsLoaded, fontFamilies }}>
       {children}
     </GlobalStateContext.Provider>
   )
