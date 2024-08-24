@@ -16,6 +16,9 @@ const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner wid
 const HomeScreen = () => {
     const { oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
 
+    const [parentHeight, setParentHeight] = useState(0);
+    const parentRef = useRef(null);
+    
     useEffect(() => {
         setOneGap(7 * setGap);
         setOneCell((parentHeight / 4) - (4 * setGap));
@@ -24,9 +27,6 @@ const HomeScreen = () => {
 
     const scrollA = useRef(new Animated.Value(0)).current;
     const colorStyle = useColorStyle();
-
-    const [parentHeight, setParentHeight] = useState(0);
-    const parentRef = useRef(null);
 
     const handleLayout = (event) => {
         const { height } = event.nativeEvent.layout;
