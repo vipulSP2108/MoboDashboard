@@ -1,13 +1,3 @@
-import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
-import useColorStyle from '../Styles/ColorStyle';
-import FontStyles from '../Styles/FontStyle';
-import { Ionicons } from '@expo/vector-icons';
-import TruncatedTextComponent from '../Components/TruncatedTextComponent';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedMusic } from '../Fetures/Queue/QueueSlice';
-import { FormatTime } from '../Components/FormatTime';
-
 // {
 // 	"albumId": "-1762193519",
 // 	"creationTime": 1724581146000,
@@ -21,11 +11,21 @@ import { FormatTime } from '../Components/FormatTime';
 // 	"width": 0
 // }
 
+import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
+import React from 'react'
+import useColorStyle from '../Styles/ColorStyle';
+import FontStyles from '../Styles/FontStyle';
+import { Ionicons } from '@expo/vector-icons';
+import TruncatedTextComponent from '../Components/TruncatedTextComponent';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedMusic } from '../Fetures/Queue/QueueSlice';
+import { FormatTime } from '../Components/FormatTime';
+
 export default function SongList({ songs, ...otherProps }) {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const dispatch = useDispatch();
-    const selectedMusic = useSelector((state) => state.queue.selectedMusic);
+    const selectedItem = useSelector((state) => state.queue.selectedItem);
 
     const handleItemPress = (item) => {
         dispatch(setSelectedMusic(item)); // Dispatch action to update selected item
@@ -47,7 +47,7 @@ export default function SongList({ songs, ...otherProps }) {
             }
             keyboardDismissMode='on-drag'
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleItemPress(item)} style={{ backgroundColor: item.id === selectedMusic?.id ? 'red' : colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
+                <TouchableOpacity onPress={() => handleItemPress(item)} style={{ backgroundColor: item.id === selectedItem?.id ? 'red' : colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
                     <View className='flex-row'>
                         <Image className=' w-14 h-14 rounded-lg' source={item.albumArt} />
                         <View className=' left-3'>

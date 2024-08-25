@@ -5,6 +5,7 @@
 // npm install react-redux
 // expo-music-library
 // npx expo install expo-media-library
+// react-native-fs
 
 import React, { useContext, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity, Button } from 'react-native';

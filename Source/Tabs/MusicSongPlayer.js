@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormatTime } from '../Components/FormatTime';
 import TruncatedTextComponent from '../Components/TruncatedTextComponent';
 import { Audio } from 'expo-av';
-import { setAudioState, setCurrentPlayingAudio, setSelectedMusic, setSound } from '../Fetures/Queue/QueueSlice';
+import { setAudioState, setCurrentPlayingAudio, setQueue, setSelectedMusic, setShuffleMode, setSound } from '../Fetures/Queue/QueueSlice';
+import Shuffle from '../Components/Shuffle';
 
 export default function MusicSongPlayer() {
     const colorStyle = useColorStyle();
@@ -21,6 +22,28 @@ export default function MusicSongPlayer() {
     const currentPlayingAudio = useSelector((state) => state.queue.currentPlayingAudio);
     const sound = useSelector((state) => state.queue.sound);
     const dispatch = useDispatch()
+
+    /// <-------------- Why ADD this -------------->
+    useEffect(() => {
+        let interval;
+        if (audioState.state === 'playing') {
+            interval = setInterval(async () => {
+                if (sound) {
+                    const status = await sound.getStatusAsync();
+                    if (status.isLoaded) {
+                        dispatch(setAudioState({
+                            ...audioState,
+                            position: Math.floor(status.positionMillis / 1000),
+                        }));
+                    }
+                }
+            }, 1000);
+        } else {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [audioState.state, sound]);
+
 
     useEffect(() => {
         if (
@@ -38,21 +61,26 @@ export default function MusicSongPlayer() {
             await sound.unloadAsync();
             dispatch(setAudioState({
                 state: 'paused',
-                isloop: false,
+                isLooping: false,
                 position: 0,
-            }))
+            }));
         }
         const soundObject = await Audio.Sound.createAsync(
             { uri: selectedMusic.uri },
             { shouldPlay: true },
             (playbackStatus) => {
                 if (playbackStatus.isLoaded) {
-                    dispatch( setAudioState({
-                            ...audioState,
-                            state: playbackStatus.isPlaying ? 'playing' : 'paused',
-                            isloop: playbackStatus.isLooping,
-                            position: Math.floor(playbackStatus.positionMillis / 1000),
-                        }))
+                    dispatch(setAudioState({
+                        ...audioState,
+                        state: playbackStatus.isPlaying ? 'playing' : 'paused',
+                        isLooping: playbackStatus.isLooping,
+                        position: Math.floor(playbackStatus.positionMillis / 1000),
+                    }))
+                }
+                if (playbackStatus.didJustFinish) {
+                    if (!playbackStatus.isLooping) {
+                        skipForwordSong();
+                    }
                 }
             }
         )
@@ -71,31 +99,40 @@ export default function MusicSongPlayer() {
         }
     };
 
-    const seek = async(value) => {
+    const seek = async (value) => {
         await sound.setPositionAsync(value * 1000)
     }
 
     const findCurrentSongIndex = () => {
         return queue.findIndex((track) => track.id == selectedMusic.id);
     }
-    const skipForwordSong = async() => {
+    const skipForwordSong = async () => {
         const currentSongIndex = findCurrentSongIndex();
-        if(currentSongIndex !== -1){
+        if (currentSongIndex !== -1) {
             const nextSong = currentSongIndex === queue.length - 1 ? queue[0] : queue[currentSongIndex + 1]
-            console.log(nextSong)
             dispatch(setSelectedMusic(nextSong))
         }
     }
 
-    const skipBackwordSong = async() => {
+    const skipBackwordSong = async () => {
         const currentSongIndex = findCurrentSongIndex();
-        if(currentSongIndex !== -1){
+        if (currentSongIndex !== -1) {
             const nextSong = currentSongIndex === 0 ? queue[queue.length - 1] : queue[currentSongIndex - 1]
-            console.log(nextSong)
             dispatch(setSelectedMusic(nextSong))
         }
     }
-    
+    const toggleLoop = async () => {
+        await sound.setIsLoopingAsync(!audioState.isLooping);
+    }
+
+    useEffect(() => {
+        dispatch(setQueue(shuffleMode ? Shuffle(queue) : assets))
+    }, [shuffleMode])
+
+    const toggleSuffle = async () => {
+        dispatch(setShuffleMode(!shuffleMode));
+    }
+
     if (selectedMusic == undefined) {
         return (
             <Text>Select Music Bro!</Text>
@@ -134,11 +171,11 @@ export default function MusicSongPlayer() {
                 <Text style={[fontstyles.numsmall, { color: colorStyle.mainText }]}>{FormatTime(selectedMusic.duration)}</Text>
             </View>
             <View className=' flex-row items-center justify-center gap-5'>
-                <Ionicons name='shuffle' size={25} color={colorStyle.subText} />
+                <Ionicons onPress={toggleSuffle} name='shuffle' size={25} color={shuffleMode ? colorStyle.mainText : colorStyle.subText} />
                 <Ionicons onPress={skipBackwordSong} name='play-back' size={30} color={colorStyle.mainText} />
                 <Ionicons onPress={togglePlayPause} name={audioState.state == 'playing' ? 'pause-circle' : 'play-circle'} size={45} color={colorStyle.mainText} />
                 <Ionicons onPress={skipForwordSong} name='play-forward' size={30} color={colorStyle.mainText} />
-                <Ionicons name='repeat' size={25} color={audioState.isloop ? colorStyle.mainText : colorStyle.subText} />
+                <Ionicons onPress={toggleLoop} name='repeat' size={25} color={audioState.isLooping ? colorStyle.mainText : colorStyle.subText} />
             </View>
         </>
     )

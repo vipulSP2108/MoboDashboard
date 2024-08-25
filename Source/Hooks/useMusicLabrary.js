@@ -17,7 +17,7 @@ const useMusicLibrary = (sortBy = MediaLibrary.SortBy.default) => {
   const getAudios = async () => {
     try {
       const results = await MediaLibrary.getAssetsAsync({
-        first: 5,
+        first: 10,
         mediaType: MediaLibrary.MediaType.audio,
         sortBy: [sortBy],
       });

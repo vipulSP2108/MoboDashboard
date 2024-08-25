@@ -7,7 +7,7 @@ const initialState = {
     currentPlayingAudio: undefined,
     audioState: {
         state: 'playing',
-        isloop: false,
+        isLooping: false,
         position: 0,
     },
     assets: [],
