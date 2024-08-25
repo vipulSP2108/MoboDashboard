@@ -1,36 +1,6 @@
 // npm i @react-native-community/slider
-const songs = [
-    {
-        id: '1',
-        title: 'Wake Up',
-        artist: 'Rise Against The Machine',
-        albumArt: require('./../../assets/images/music.jpg')
-    },
-    {
-        id: '2',
-        title: 'Another Song',
-        artist: 'Another Artist',
-        albumArt: require('./../../assets/images/music.jpg')
-    }, {
-        id: '3',
-        title: 'Another Song',
-        artist: 'Another Artist',
-        albumArt: require('./../../assets/images/music.jpg')
-    }, {
-        id: '4',
-        title: 'Another Song',
-        artist: 'Another Artist',
-        albumArt: require('./../../assets/images/music.jpg')
-    }, {
-        id: '5',
-        title: 'Another Song',
-        artist: 'Another Artist',
-        albumArt: require('./../../assets/images/music.jpg')
-    },
-];
-
 import React, { useContext, useRef, useState } from 'react';
-import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity, Button } from 'react-native';
 import useColorStyle from '../Styles/ColorStyle';
 import Grid2X2 from '../Components/Grid2X2';
 import Grid2X1 from '../Components/Grid2X1';
@@ -38,6 +8,8 @@ import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import Slider from '@react-native-community/slider';
 import { Ionicons } from '@expo/vector-icons';
 import FontStyles from '../Styles/FontStyle';
+import MusicSongList from './MusicSongList';
+import { Songs } from '../Data/Songs';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
@@ -45,6 +17,19 @@ const MusicScreen = () => {
     const { oneGap, oneCell } = useContext(GlobalStateContext);
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
+    const [selectedFolder, setSelectedFolder] = useState(null);
+
+    const renderFolderSelection = () => (
+        <View>
+            <Button title="Open Folder Rock" onPress={() => setSelectedFolder('Rock')} />
+            <Button title="Open Folder Pop" onPress={() => setSelectedFolder('Pop')} />
+            <Button title="Open Folder Jazz" onPress={() => setSelectedFolder('Jazz')} />
+        </View>
+    );
+
+    const backBotton = () => {
+        setSelectedFolder(null);
+    };
 
     return (
         <View style={{ backgroundColor: colorStyle.mainBg, height: Dimensions.get('window').height }}>
@@ -102,60 +87,7 @@ const MusicScreen = () => {
                 </View>
                 <View style={{ gap: oneGap }}>
                     <View className='overflow-hidden' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: 4 * oneCell + 3 * oneGap, width: 4 * oneCell + 3 * oneGap }} >
-                        <View className=' p-3 flex-row justify-between'>
-                            <View className=' flex-row items-center'>
-                                <Ionicons name='chevron-back-outline' size={25} color={colorStyle.mainText} />
-                                <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}> Folder Name</Text>
-                            </View>
-                            <View className=' flex-row items-center'>
-                                <Ionicons style={{ marginRight: 5 }} name='heart-outline' size={25} color={colorStyle.mainText} />
-                                <Ionicons name='search-outline' size={25} color={colorStyle.mainText} />
-                                <Ionicons name='ellipsis-vertical' size={25} color={colorStyle.mainText} />
-                            </View>
-                        </View>
-                        <View>
-                            {/* <View> */}
-                            <FlatList
-                                data={songs}
-                                ListHeaderComponent={
-                                    <View style={{backgroundColor: colorStyle.subBg}} className='flex-row justify-between rounded-t-2xl px-3 pt-3'>
-                                        <View className=' flex-row items-center'>
-                                            <Text style={[fontstyles.home, { color: colorStyle.mainText, marginBottom: -2 }]}>Folder Name </Text>
-                                            <Ionicons name='chevron-down-outline' size={20} color={colorStyle.mainText} />
-                                        </View>
-                                        <View>
-                                            <Ionicons name='filter' size={20} color={colorStyle.mainText} />
-                                        </View>
-                                    </View>
-                                }
-                                ListFooterComponent={
-                                    <View style={{height: 52, backgroundColor: colorStyle.subBg}}/>
-                                }
-                                keyboardDismissMode='on-drag'
-                                renderItem={({ item }) => (
-                                    <TouchableOpacity style={{backgroundColor: colorStyle.subBg}} className='flex-row items-center justify-between p-3'>
-                                        <View className='flex-row'>
-                                            <Image className=' w-14 h-14 rounded-lg' source={item.albumArt} />
-                                            <View className=' left-3'>
-                                                <Text style={[fontstyles.home, { color: colorStyle.mainText, marginBottom: -8 }]}>{item.title}</Text>
-                                                <Text style={[fontstyles.homesmall, { color: colorStyle.subText }]}>{item.artist}</Text>
-                                            </View>
-                                        </View>
-                                            <Ionicons name='ellipsis-vertical' size={20} color={colorStyle.mainText} />
-                                    </TouchableOpacity>
-                                )}
-                                keyExtractor={item => item.id}
-                                contentContainerStyle={styles.listContainer}
-                            />
-                            {/* <View className=' flex-row items-center'>
-                                    <Text style={[fontstyles.home, { color: colorStyle.mainText, marginBottom: -2 }]}>Folder Name </Text>
-                                    <Ionicons name='chevron-down-outline' size={20} color={colorStyle.mainText} />
-                                </View>
-                                <View>
-                                    <Ionicons name='filter' size={20} color={colorStyle.mainText} />
-                                </View> */}
-                            {/* </View> */}
-                        </View>
+                        {selectedFolder ? <MusicSongList songs={Songs[selectedFolder]} backBotton={backBotton} folderName={selectedFolder}/> : renderFolderSelection()}
                     </View>
                 </View>
             </View>
