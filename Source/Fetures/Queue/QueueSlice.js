@@ -36,7 +36,7 @@ export const queueSlice = createSlice({
             state.assets = action.payload
         },
         setSelectedMusic: (state, action) => { // Add this reducer
-            state.selectedItem = action.payload;
+            state.selectedMusic = action.payload;
         },
     }
 })

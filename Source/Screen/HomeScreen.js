@@ -1,10 +1,11 @@
-const setGap = 2 
+const setGap = 2
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions } from 'react-native';
 import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
+import MusicSongPlayer from '../Tabs/MusicSongPlayer';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
@@ -13,7 +14,7 @@ const HomeScreen = () => {
 
     const [parentHeight, setParentHeight] = useState(0);
     const parentRef = useRef(null);
-    
+
     useEffect(() => {
         setOneGap(7 * setGap);
         setOneCell((parentHeight / 4) - (4 * setGap));
@@ -48,7 +49,9 @@ const HomeScreen = () => {
                 </View>
 
                 <View onLayout={handleLayout} ref={parentRef} style={{ margin: 14, columnGap: 12 }} className='flex-row justify-between'>
-                    
+                    <View style={{ gap: oneGap, flexDirection: 'row' }}>
+                        {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} /> */}
+                    </View>
                 </View>
             </Animated.ScrollView>
         </View>

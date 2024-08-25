@@ -25,7 +25,7 @@ export default function SongList({ songs, ...otherProps }) {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const dispatch = useDispatch();
-    const selectedItem = useSelector((state) => state.queue.selectedItem);
+    const selectedMusic = useSelector((state) => state.queue.selectedMusic);
 
     const handleItemPress = (item) => {
         dispatch(setSelectedMusic(item)); // Dispatch action to update selected item
@@ -47,7 +47,7 @@ export default function SongList({ songs, ...otherProps }) {
             }
             keyboardDismissMode='on-drag'
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleItemPress(item)} style={{ backgroundColor: item.id === selectedItem?.id ? 'red' : colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
+                <TouchableOpacity onPress={() => handleItemPress(item)} style={{ backgroundColor: item.id === selectedMusic?.id ? 'red' : colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
                     <View className='flex-row'>
                         <Image className=' w-14 h-14 rounded-lg' source={item.albumArt} />
                         <View className=' left-3'>

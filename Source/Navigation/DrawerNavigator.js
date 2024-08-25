@@ -8,6 +8,7 @@ import useColorStyle from '../Styles/ColorStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import HomeScreen from '../Screen/HomeScreen';
 import MusicScreen from '../Screen/MusicScreen';
+import ToolsScreen from '../Screen/ToolsScreen';
 
 const Drawer = createDrawerNavigator();
 const HomeScreen_Icon = ({ focused, color, size }) => <Ionicons name='home' size={size} color={color} />
@@ -41,7 +42,7 @@ export default function DrawerNavigator() {
         {/* options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: ProfitIcon2 }} */}
           <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: HomeScreen_Icon }} />
           <Drawer.Screen name="MusicScreen" component={MusicScreen} options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: Notifications_Icon }}/>
-          <Drawer.Screen name="Notifications2" component={HomeScreen} options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: Notifications2_Icon }}/>
+          <Drawer.Screen name="ToolsScreen" component={ToolsScreen} options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: Notifications2_Icon }}/>
         </>
       </Drawer.Navigator>
     </NavigationContainer>
