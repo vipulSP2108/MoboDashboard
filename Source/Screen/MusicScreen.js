@@ -1,4 +1,8 @@
 // npm i @react-native-community/slider
+// npx expo install expo-av
+// npx expo install expo-media-library
+// npm install @reduxjs/toolkit
+
 import React, { useContext, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity, Button } from 'react-native';
 import useColorStyle from '../Styles/ColorStyle';

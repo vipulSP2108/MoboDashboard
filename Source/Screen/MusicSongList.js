@@ -62,7 +62,7 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                     />
                     <View className='flex-row items-center -mb-1'>
                         <Text style={[fontstyles.homebig, { color: colorStyle.mainText }]}>{folderName}  </Text>
-                        <Text style={[fontstyles.homesmall, { fontSize: 16, color: colorStyle.mainBg}]}>|  {songs.length} items</Text>
+                        <Text style={[fontstyles.homesmall, { fontSize: 16, color: colorStyle.mainBg }]}>|  {songs.length} items</Text>
                     </View>
                     <Text style={[fontstyles.homesmall, { fontSize: 16, color: colorStyle.mainBg, marginBottom: -2 }]}>Home . Internal Storage . Folder Name</Text>
                 </Animated.View>
@@ -79,9 +79,6 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                                     <Ionicons name='filter' size={15} color={colorStyle.mainText} />
                                 </View>
                             </View>
-                        }
-                        ListFooterComponent={
-                            <View style={{ height: 52, backgroundColor: colorStyle.subBg }} />
                         }
                         keyboardDismissMode='on-drag'
                         renderItem={({ item }) => (
