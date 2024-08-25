@@ -9,7 +9,6 @@ import SongList from './SongList';
 
 export default function MusicSongList({ songs, backBotton, folderName }) {
     const { assets, isLoadingMore, loadMore } = useMusicLibrary()
-
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const scrollA = useRef(new Animated.Value(0)).current;
@@ -49,7 +48,6 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                 )}
                 scrollEventThrottle={16}
             >
-
                 <Animated.View
                     style={styles.banner(scrollA)}
                     className=' p-3 justify-between'>
@@ -63,23 +61,24 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                             className=' w-24 h-24 rounded-lg'
                             source={require('./../../assets/images/music.jpg')}
                         />
-                        <View style={{flex: 1}}>
+                        <View style={{ flex: 1 }}>
                             <View className='flex-row items-center mb-2'>
                                 <Text style={[fontstyles.homebig, { fontSize: 38, color: colorStyle.mainText }]}>{folderName}  </Text>
                                 <Text style={[fontstyles.home, { color: colorStyle.mainBg }]}>|  {assets.length} items</Text>
                             </View>
-                            <Text numberOfLines={2} ellipsizeMode='tail' style={[fontstyles.homesmall, {lineHeight: 20, color: colorStyle.mainBg, marginBottom: -2 }]}>Home . Internal Storage . Folder Name. Home . </Text>
+                            <Text numberOfLines={2} ellipsizeMode='tail' style={[fontstyles.homesmall, { lineHeight: 20, color: colorStyle.mainBg, marginBottom: -2 }]}>Home . Internal Storage . Folder Name. Home . </Text>
                         </View>
                     </View>
                 </Animated.View>
                 <View>
                     <SongList
                         songs={assets}
-                        onEndReachedThreshold={0.8}
-                        onEndReached={loadMore}
+                        // onEndReachedThreshold={0.8}
+                        // onEndReached={loadMore}
                         ListFooterComponent={() => isLoadingMore ?
                             <ActivityIndicator size={'large'} color={'red'} />
-                            : null}
+                            : null
+                        }
                     />
                 </View>
             </Animated.ScrollView>

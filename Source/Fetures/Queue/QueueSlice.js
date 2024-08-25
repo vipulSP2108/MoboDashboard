@@ -10,7 +10,8 @@ const initialState = {
         isloop: false,
         position: 0,
     },
-    assets: []
+    assets: [],
+    selectedMusic: null,
 }
 export const queueSlice = createSlice({
     name: 'counter',
@@ -33,14 +34,18 @@ export const queueSlice = createSlice({
         },
         setAssets: (state, action) => {
             state.assets = action.payload
-        }
+        },
+        setSelectedMusic: (state, action) => { // Add this reducer
+            state.selectedItem = action.payload;
+        },
     }
 })
 
 export const {
     setQueue, setShuffleMode,
     setSound, setCurrentPlayingAudio,
-    setAudioState, setAssets
+    setAudioState, setAssets,
+    setSelectedMusic
 } = queueSlice.actions
 
 export default queueSlice.reducer;
