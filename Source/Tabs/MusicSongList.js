@@ -1,16 +1,18 @@
-const BANNER_H = 200
-import { View, Text, TouchableOpacity, FlatList, Image, Animated } from 'react-native'
+const BANNER_H = 160
+import { View, Text, TouchableOpacity, FlatList, Image, Animated, ActivityIndicator } from 'react-native'
 import React, { useRef } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
+import useMusicLibrary from '../Hooks/useMusicLabrary';
+import SongList from './SongList';
 
 export default function MusicSongList({ songs, backBotton, folderName }) {
+    const { assets, isLoadingMore, loadMore } = useMusicLibrary()
+
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const scrollA = useRef(new Animated.Value(0)).current;
-
-
     return (
         <>
             <Animated.View
@@ -56,44 +58,28 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                         {/* <Ionicons name='' size={25} color={colorStyle.mainText} />  */}
                         <Ionicons style={{ backgroundColor: colorStyle.subBg, borderRadius: 4, padding: 2, alignItems: 'center' }} onPress={backBotton} name='search' size={20} color={colorStyle.mainText} />
                     </View>
-                    <Image
-                        className=' w-14 h-14 rounded-lg mt-7'
-                        source={require('./../../assets/images/music.jpg')}
-                    />
-                    <View className='flex-row items-center -mb-1'>
-                        <Text style={[fontstyles.homebig, { color: colorStyle.mainText }]}>{folderName}  </Text>
-                        <Text style={[fontstyles.homesmall, { fontSize: 16, color: colorStyle.mainBg }]}>|  {songs.length} items</Text>
+                    <View className=' flex-row items-center gap-2'>
+                        <Image
+                            className=' w-24 h-24 rounded-lg'
+                            source={require('./../../assets/images/music.jpg')}
+                        />
+                        <View style={{flex: 1}}>
+                            <View className='flex-row items-center mb-2'>
+                                <Text style={[fontstyles.homebig, { fontSize: 38, color: colorStyle.mainText }]}>{folderName}  </Text>
+                                <Text style={[fontstyles.home, { color: colorStyle.mainBg }]}>|  {assets.length} items</Text>
+                            </View>
+                            <Text numberOfLines={2} ellipsizeMode='tail' style={[fontstyles.homesmall, {lineHeight: 20, color: colorStyle.mainBg, marginBottom: -2 }]}>Home . Internal Storage . Folder Name. Home . </Text>
+                        </View>
                     </View>
-                    <Text style={[fontstyles.homesmall, { fontSize: 16, color: colorStyle.mainBg, marginBottom: -2 }]}>Home . Internal Storage . Folder Name</Text>
                 </Animated.View>
                 <View>
-                    <FlatList
-                        data={songs}
-                        ListHeaderComponent={
-                            <View style={{ backgroundColor: colorStyle.subBg }} className='flex-row justify-between rounded-t-xl px-3 pt-3'>
-                                <View className=' flex-row items-center'>
-                                    <Text style={[fontstyles.homesmall, { color: colorStyle.mainText, marginBottom: -2 }]}>Date added </Text>
-                                    <Ionicons name='chevron-down-outline' size={15} color={colorStyle.mainText} />
-                                </View>
-                                <View>
-                                    <Ionicons name='filter' size={15} color={colorStyle.mainText} />
-                                </View>
-                            </View>
-                        }
-                        keyboardDismissMode='on-drag'
-                        renderItem={({ item }) => (
-                            <TouchableOpacity style={{ backgroundColor: colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
-                                <View className='flex-row'>
-                                    <Image className=' w-14 h-14 rounded-lg' source={item.albumArt} />
-                                    <View className=' left-3'>
-                                        <Text style={[fontstyles.home, { color: colorStyle.mainText, marginBottom: -8 }]}>{item.title}</Text>
-                                        <Text style={[fontstyles.homesmall, { color: colorStyle.subText }]}>{item.artist}</Text>
-                                    </View>
-                                </View>
-                                <Ionicons name='ellipsis-vertical' size={20} color={colorStyle.mainText} />
-                            </TouchableOpacity>
-                        )}
-                        keyExtractor={item => item.id}
+                    <SongList
+                        songs={assets}
+                        onEndReachedThreshold={0.8}
+                        onEndReached={loadMore}
+                        ListFooterComponent={() => isLoadingMore ?
+                            <ActivityIndicator size={'large'} color={'red'} />
+                            : null}
                     />
                 </View>
             </Animated.ScrollView>
@@ -126,7 +112,7 @@ const styles = {
     },
     banner: scrollA => ({
         height: BANNER_H,
-        width: '200%',
+        width: '100%',
         opacity: scrollA.interpolate({
             inputRange: [0, BANNER_H * 0.9],
             outputRange: [1, 0], // Fade out as it scrolls up

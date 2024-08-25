@@ -4,11 +4,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions } from 'react-native';
 import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
-import Grid1X1 from '../Components/Grid1X1';
-import Grid1X2 from '../Components/Grid1X2';
-import Grid2X2 from '../Components/Grid2X2';
-import Grid3X2 from '../Components/Grid3X2';
-import Grid2X1 from '../Components/Grid2X1';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
@@ -53,11 +48,7 @@ const HomeScreen = () => {
                 </View>
 
                 <View onLayout={handleLayout} ref={parentRef} style={{ margin: 14, columnGap: 12 }} className='flex-row justify-between'>
-                    <Grid1X1 />
-                    <Grid1X2 />
-                    <Grid2X1 width={parentHeight} />
-                    <Grid2X2 />
-                    <Grid3X2 width={parentHeight} />
+                    
                 </View>
             </Animated.ScrollView>
         </View>

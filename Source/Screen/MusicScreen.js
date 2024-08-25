@@ -2,18 +2,20 @@
 // npx expo install expo-av
 // npx expo install expo-media-library
 // npm install @reduxjs/toolkit
+// npm install react-redux
+// expo-music-library
+// npx expo install expo-media-library
 
 import React, { useContext, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity, Button } from 'react-native';
 import useColorStyle from '../Styles/ColorStyle';
-import Grid2X2 from '../Components/Grid2X2';
-import Grid2X1 from '../Components/Grid2X1';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import Slider from '@react-native-community/slider';
 import { Ionicons } from '@expo/vector-icons';
 import FontStyles from '../Styles/FontStyle';
-import MusicSongList from './MusicSongList';
+
 import { Songs } from '../Data/Songs';
+import MusicSongList from '../Tabs/MusicSongList';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
