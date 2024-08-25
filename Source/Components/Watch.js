@@ -49,7 +49,7 @@ export default function Watch() {
                     </View>
                 </View>
                 <View className=' items-center'>
-                    <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}>20*C</Text>
+                    <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}>20°C</Text>
                     <Text style={[fontstyles.home, { color: colorStyle.subText }]}>Your Address</Text>
                     <Text style={[fontstyles.homebold, { color: colorStyle.subText }]}>Country</Text>
                 </View>

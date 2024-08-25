@@ -29,6 +29,9 @@ const FontStyles = () => {
   };
 
   return StyleSheet.create({
+    homesmall: {
+      fontFamily: fontFamilies.Zain_light, fontSize: 18, marginBottom: -12
+    },
     home: {
       fontFamily: fontFamilies.Zain_bold, fontSize: 21, marginBottom: -12
     },
@@ -40,6 +43,9 @@ const FontStyles = () => {
     },
     clock: {
       fontFamily: fontFamilies.Nunito_black, fontSize: 52,
+    },
+    numsmall: {
+      fontFamily: fontFamilies.Nunito_black, fontSize: 16,
     },
 
     // entryUpper: {
