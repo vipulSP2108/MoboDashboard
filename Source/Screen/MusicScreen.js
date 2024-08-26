@@ -6,6 +6,11 @@
 // expo-music-library
 // npx expo install expo-media-library
 // react-native-fs
+// npx expo install expo-document-picke
+// "android": "expo run:android",
+// "ios": "expo run:ios",    
+// "expo": "^51.0.31",    
+// "react-native-fs": "^2.20.0",
 
 import React, { useContext, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity, Button } from 'react-native';
@@ -17,6 +22,7 @@ import FontStyles from '../Styles/FontStyle';
 import { Songs } from '../Data/Songs';
 import MusicSongList from '../Tabs/MusicSongList';
 import MusicSongPlayer from '../Tabs/MusicSongPlayer';
+import { MusicFolders } from '../Tabs/MusicFolders';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
@@ -25,14 +31,6 @@ const MusicScreen = () => {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const [selectedFolder, setSelectedFolder] = useState(null);
-
-    const renderFolderSelection = () => (
-        <View>
-            <Button title="Open Folder Rock" onPress={() => setSelectedFolder('Rock')} />
-            <Button title="Open Folder Pop" onPress={() => setSelectedFolder('Pop')} />
-            <Button title="Open Folder Jazz" onPress={() => setSelectedFolder('Jazz')} />
-        </View>
-    );
 
     const backBotton = () => {
         setSelectedFolder(null);
@@ -59,7 +57,7 @@ const MusicScreen = () => {
                 </View>
                 <View style={{ gap: oneGap }}>
                     <View className='overflow-hidden' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: 4 * oneCell + 3 * oneGap, width: 4 * oneCell + 3 * oneGap }} >
-                        {selectedFolder ? <MusicSongList songs={Songs[selectedFolder]} backBotton={backBotton} folderName={selectedFolder} /> : renderFolderSelection()}
+                        {selectedFolder ? <MusicSongList songs={Songs[selectedFolder]} backBotton={backBotton} folderName={selectedFolder} /> : <MusicFolders setSelectedFolder={setSelectedFolder} />}
                     </View>
                 </View>
             </View>
