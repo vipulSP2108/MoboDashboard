@@ -1,3 +1,6 @@
+// npx expo install react-native-gesture-handler
+// expo-location
+
 const setGap = 2
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -6,19 +9,33 @@ import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import MusicSongPlayer from '../Tabs/MusicSongPlayer';
+import Slider from '@react-native-community/slider';
+import * as Location from 'expo-location';
+import { toAddress } from '../Components/toAddress';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
 const HomeScreen = () => {
-    const { oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
+    const { location, setLocation, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
+
+    useEffect(() => {
+        const getLocation = async () => {
+            let currentLocation = await Location.getCurrentPositionAsync({});
+            setLocation(currentLocation);
+            console.log("Location:");
+            console.log(currentLocation);
+        };
+        getLocation();
+    }, []);
 
     const [parentHeight, setParentHeight] = useState(0);
     const parentRef = useRef(null);
 
+    var address;
     useEffect(() => {
         setOneGap(7 * setGap);
         setOneCell((parentHeight / 4) - (4 * setGap));
-        console.log(parentHeight, oneCell, oneGap)
+        address = toAddress(location?.coords.latitude, location?.coords.longitude)
     }, [parentHeight, setGap, setOneGap, setOneCell]);
 
     const scrollA = useRef(new Animated.Value(0)).current;
@@ -29,6 +46,7 @@ const HomeScreen = () => {
         setParentHeight(height);
     };
 
+    const [volumeControl, setVolumeControl] = useState(0);
     return (
         <View>
             <Animated.ScrollView
@@ -50,7 +68,20 @@ const HomeScreen = () => {
 
                 <View onLayout={handleLayout} ref={parentRef} style={{ margin: 14, columnGap: 12 }} className='flex-row justify-between'>
                     <View style={{ gap: oneGap, flexDirection: 'row' }}>
-                        {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} /> */}
+                        <View className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 3 * oneCell + 2 * oneGap, width: 1 * oneCell }}>
+                            <View style={{ width: 3 * oneCell + 2 * oneGap, transform: [{ rotate: "-90deg" }] }}>
+                                <Slider
+                                    style={{ height: 3 * oneCell + 2 * oneGap }}
+                                    onValueChange={(value) => setVolumeControl(value)}
+                                    vertical={true}
+                                    value={volumeControl}
+                                    minimumValue={0}
+                                    maximumValue={100}
+                                    minimumTrackTintColor={colorStyle.mainText}
+                                    maximumTrackTintColor={colorStyle.mainText}
+                                />
+                            </View>
+                        </View>
                     </View>
                 </View>
             </Animated.ScrollView>

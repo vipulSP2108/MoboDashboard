@@ -45,11 +45,14 @@ export default GlobalStateProvider = ({ children }) => {
   }, [fontsLoaded]);
 
   // oneGap and oneCell
-  const [oneGap, setOneGap] = useState();
-  const [oneCell, setOneCell] = useState();
+  const [oneGap, setOneGap] = useState(0);
+  const [oneCell, setOneCell] = useState(0);
+
+  // Location
+  const [location, setLocation] = useState();
 
   return (
-    <GlobalStateContext.Provider value={{ oneGap, setOneGap, oneCell, setOneCell, fontsLoaded, fontFamilies }}>
+    <GlobalStateContext.Provider value={{ location, setLocation, oneGap, setOneGap, oneCell, setOneCell, fontsLoaded, fontFamilies }}>
       {children}
     </GlobalStateContext.Provider>
   )
