@@ -13,7 +13,6 @@ const useMusicLibrary = (sortBy = MediaLibrary.SortBy.default) => {
       getAudios();
   }, []);
 
-
   const getAudios = async () => {
     try {
       const results = await MediaLibrary.getAssetsAsync({
@@ -30,10 +29,12 @@ const useMusicLibrary = (sortBy = MediaLibrary.SortBy.default) => {
   };
 
   const loadMore = async () => {
-    if (!lastMusicAsset) return;
-
+    if (!lastMusicAsset) {
+      console.log('Returning early');
+      return;
+    }
     setIsLoadingMore(true);
-    // try {
+    try {
       const results = await MediaLibrary.getAssetsAsync({
         first: 5,
         mediaType: MediaLibrary.MediaType.audio,
@@ -44,11 +45,11 @@ const useMusicLibrary = (sortBy = MediaLibrary.SortBy.default) => {
       dispatch(setAssets(newAssets));
       dispatch(setQueue(newAssets));
       setLastMusicAsset(results.endCursor);
-    // } catch (error) {
-    //   console.error('Error loading more audios:', error);
-    // } finally {
+    } catch (error) {
+      console.error('Error loading more audios:', error);
+    } finally {
       setIsLoadingMore(false);
-    // }
+    }
   };
 
   return { assets, isLoadingMore, loadMore };

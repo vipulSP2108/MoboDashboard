@@ -1,8 +1,4 @@
 import { Button, View } from "react-native";
-// import RNFS from 'react-native-fs';
-// import * as MediaLibrary from 'expo-media-library';
-import * as FileSystem from 'expo-file-system';
-var RNFS = require('react-native-fs');
 
 export const MusicFolders = ({ setSelectedFolder }) => (
     <View>

@@ -3,14 +3,9 @@
 // npx expo install expo-media-library
 // npm install @reduxjs/toolkit
 // npm install react-redux
-// expo-music-library
 // npx expo install expo-media-library
-// react-native-fs
-// npx expo install expo-document-picke
-// "android": "expo run:android",
-// "ios": "expo run:ios",    
-// "expo": "^51.0.31",    
-// "react-native-fs": "^2.20.0",
+
+
 
 import React, { useContext, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity, Button } from 'react-native';

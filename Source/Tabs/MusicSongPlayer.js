@@ -156,18 +156,23 @@ export default function MusicSongPlayer() {
                 <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}>{TruncatedTextComponent(selectedMusic.filename, 21)}</Text>
                 <Text style={[fontstyles.home, { color: colorStyle.subText }]}>{FormatTime(selectedMusic.duration)}</Text>
             </View>
-            <View className=' flex-row w-full items-center justify-center'>
+            <View className={`flex-row w-full items-center justify-between ${selectedMusic.duration >= 3600 ? 'px-10' : 'px-8'}`}>
                 <Text style={[fontstyles.numsmall, { color: colorStyle.mainText }]}>{FormatTime(audioState.position)}</Text>
-                <Slider
-                    // className=' w-10/12'
-                    style={{ width: 190 }}
-                    value={audioState.position}
-                    minimumValue={0}
-                    maximumValue={selectedMusic.duration}
-                    minimumTrackTintColor={colorStyle.mainText}
-                    maximumTrackTintColor={colorStyle.mainText}
-                    onSlidingComplete={seek}
-                />
+                <View className='w-44' style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: [{ translateX: -50 }, { translateY: -8 }]
+                }}>
+                    <Slider
+                        value={audioState.position}
+                        minimumValue={0}
+                        maximumValue={selectedMusic.duration}
+                        minimumTrackTintColor={colorStyle.mainText}
+                        maximumTrackTintColor={colorStyle.mainText}
+                        onSlidingComplete={seek}
+                    />
+                </View>
                 <Text style={[fontstyles.numsmall, { color: colorStyle.mainText }]}>{FormatTime(selectedMusic.duration)}</Text>
             </View>
             <View className=' flex-row items-center justify-center gap-5'>

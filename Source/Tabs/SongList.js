@@ -20,12 +20,14 @@ import TruncatedTextComponent from '../Components/TruncatedTextComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedMusic } from '../Fetures/Queue/QueueSlice';
 import { FormatTime } from '../Components/FormatTime';
+import useMusicLibrary from '../Hooks/useMusicLabrary';
 
 export default function SongList({ songs, ...otherProps }) {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const dispatch = useDispatch();
-    const selectedItem = useSelector((state) => state.queue.selectedItem);
+    const selectedMusic = useSelector((state) => state.queue.selectedMusic);
+    const { assets, isLoadingMore, loadMore } = useMusicLibrary();
 
     const handleItemPress = (item) => {
         dispatch(setSelectedMusic(item)); // Dispatch action to update selected item
@@ -33,6 +35,9 @@ export default function SongList({ songs, ...otherProps }) {
 
     return (
         <FlatList
+            // onScroll={handleScroll}
+            onEndReachedThreshold={0.9}
+            onEndReached={loadMore}
             data={songs}
             ListHeaderComponent={
                 <View style={{ backgroundColor: colorStyle.subBg }} className='flex-row justify-between rounded-t-xl px-3 pt-3'>
@@ -47,18 +52,19 @@ export default function SongList({ songs, ...otherProps }) {
             }
             keyboardDismissMode='on-drag'
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleItemPress(item)} style={{ backgroundColor: item.id === selectedItem?.id ? 'red' : colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
+                <TouchableOpacity onPress={() => handleItemPress(item)} style={{ backgroundColor: colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
                     <View className='flex-row'>
                         <Image className=' w-14 h-14 rounded-lg' source={item.albumArt} />
                         <View className=' left-3'>
-                            <Text numberOfLines={1} ellipsizeMode='tail' style={[fontstyles.home, { color: colorStyle.mainText, marginBottom: -8 }]}>{TruncatedTextComponent(item.filename, 21)}</Text>
+                            <Text numberOfLines={1} ellipsizeMode='tail' style={[fontstyles.home, { color: item.id === selectedMusic?.id ? colorStyle.diffBlue : colorStyle.mainText, marginBottom: -8 }]}>{TruncatedTextComponent(item.filename, 21)}</Text>
                             <Text style={[fontstyles.homesmall, { color: colorStyle.subText }]}>{FormatTime(item.duration)}</Text>
                         </View>
                     </View>
                     <Ionicons name='ellipsis-vertical' size={20} color={colorStyle.mainText} />
                 </TouchableOpacity>
             )}
-            keyExtractor={(_, index) => index.toString()}
+            // keyExtractor={(item, index) => {`${item.toString()}_${index.toString()}`}}
+            keyExtractor={(item, index) => index.toString()}
             // showsVerticalScrollIndicator={false}
             {...otherProps}
         />

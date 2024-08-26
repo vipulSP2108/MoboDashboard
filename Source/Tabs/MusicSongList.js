@@ -14,7 +14,7 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
     const scrollA = useRef(new Animated.Value(0)).current;
     return (
         <>
-            <Animated.View
+            {/* <Animated.View
                 style={[
                     styles.headerbanner(scrollA),
                     {
@@ -53,7 +53,6 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                     className=' p-3 justify-between'>
                     <View className='flex-row justify-between'>
                         <Ionicons style={{ backgroundColor: colorStyle.subBg, borderRadius: 4, padding: 2, alignItems: 'center' }} onPress={backBotton} name='chevron-back-outline' size={20} color={colorStyle.mainText} />
-                        {/* <Ionicons name='' size={25} color={colorStyle.mainText} />  */}
                         <Ionicons style={{ backgroundColor: colorStyle.subBg, borderRadius: 4, padding: 2, alignItems: 'center' }} onPress={backBotton} name='search' size={20} color={colorStyle.mainText} />
                     </View>
                     <View className=' flex-row items-center gap-2'>
@@ -70,18 +69,30 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                         </View>
                     </View>
                 </Animated.View>
-                <View>
-                    <SongList
-                        songs={assets}
-                        // onEndReachedThreshold={0.8}
-                        // onEndReached={loadMore}
-                        ListFooterComponent={() => isLoadingMore ?
-                            <ActivityIndicator size={'large'} color={'red'} />
-                            : null
-                        }
-                    />
+                <View> */}
+                <View className='p-2 flex-row justify-between'>
+                    <View className='flex-row items-center'>
+                        <Ionicons onPress={backBotton} name='chevron-back' size={25} color={colorStyle.mainBg} />
+                        <Text style={[fontstyles.homebig, { color: colorStyle.mainBg, marginBottom: -2 }]}> {folderName}</Text>
+                        <Text style={[fontstyles.homesmall, { color: colorStyle.mainBg, marginBottom: -2 }]}> | {assets.length} items</Text>
+                    </View>
+                    <View className='flex-row items-center'>
+                        <Ionicons style={{ marginRight: 5 }} name='heart' size={25} color={colorStyle.mainBg} />
+                        <Ionicons name='search' size={25} color={colorStyle.mainBg} />
+                        <Ionicons name='ellipsis-vertical' size={25} color={colorStyle.mainBg} />
+                    </View>
                 </View>
-            </Animated.ScrollView>
+            <SongList
+                songs={assets}
+                onEndReachedThreshold={0.9}
+                // onEndReached={handleLoadMore}
+                // onEndReached={() => loadMore()}
+                ListFooterComponent={isLoadingMore && <ActivityIndicator size={'large'} color={'red'} />
+                }
+            />
+            {console.log(isLoadingMore)}
+            {/* </View>
+            </Animated.ScrollView> */}
         </>
     )
 }
