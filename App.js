@@ -8,23 +8,26 @@ import store from './Source/App/Store';
 import * as Location from 'expo-location';
 
 export default function App() {
-  
+
   useEffect(() => {
-    requestPermissions();
+    requestMediaPermissions();
+    requestLocationPermissions();
     audioSetup();
   }, [])
 
-  const requestPermissions = async () => {
+  const requestMediaPermissions = async () => {
     let { status } = await MediaLibrary.requestPermissionsAsync();
     if (status !== 'granted') {
       console.log('Permission to access media library was denied');
       status = (await MediaLibrary.requestPermissionsAsync()).status;
     }
-    
-    let { statusLocation } = await  Location.requestForegroundPermissionsAsync();
-    if (statusLocation !== 'granted') {
-      console.log("Please to access grant location was denied");
-      status = (await Location.requestForegroundPermissionsAsync()).statusLocation;
+  }
+
+  const requestLocationPermissions = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log("Permission to access grant location was denied");
+      status = (await Location.requestForegroundPermissionsAsync()).status;
     }
   };
 

@@ -2,6 +2,7 @@
 // expo-location
 
 const setGap = 2
+const BANNER_W = Dimensions.get('window').height * 0.9;
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions } from 'react-native';
@@ -11,32 +12,26 @@ import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import MusicSongPlayer from '../Tabs/MusicSongPlayer';
 import Slider from '@react-native-community/slider';
 import * as Location from 'expo-location';
-import { toAddress } from '../Components/toAddress';
-
-const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
 const HomeScreen = () => {
-    const { location, setLocation, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
-
-    useEffect(() => {
-        const getLocation = async () => {
-            let currentLocation = await Location.getCurrentPositionAsync({});
-            setLocation(currentLocation);
-            console.log("Location:");
-            console.log(currentLocation);
-        };
-        getLocation();
-    }, []);
+    const { locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
 
     const [parentHeight, setParentHeight] = useState(0);
     const parentRef = useRef(null);
 
-    var address;
     useEffect(() => {
         setOneGap(7 * setGap);
-        setOneCell((parentHeight / 4) - (4 * setGap));
-        address = toAddress(location?.coords.latitude, location?.coords.longitude)
+        setOneCell((parentHeight / 4) - (4 * setGap))
     }, [parentHeight, setGap, setOneGap, setOneCell]);
+
+    useEffect(() => {
+        const getLocation = async () => {
+            let currentLocation = await Location.getCurrentPositionAsync({});
+            setLocationCoords(currentLocation);
+            console.log("Location Updated");
+        };
+        getLocation();
+    }, []);
 
     const scrollA = useRef(new Animated.Value(0)).current;
     const colorStyle = useColorStyle();

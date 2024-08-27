@@ -3,18 +3,22 @@ import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
+import reverseGeocode from './toAddress';
+import * as Location from 'expo-location';
 
 export default function Watch() {
     const [date, setDate] = useState(new Date());
-    const { fontFamilies } = useContext(GlobalStateContext);
+    const [lastLocation, setLastLocation] = useState();
+    const [Address, setAddress] = useState();
+    const { fontFamilies, locationCoords } = useContext(GlobalStateContext);
     const fontstyles = FontStyles();
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-          setDate(new Date());
+            setDate(new Date());
         }, 1000);
         return () => clearInterval(intervalId);
-      }, []);
+    }, []);
 
     if (!fontFamilies) {
         return null;
@@ -25,6 +29,20 @@ export default function Watch() {
         return days[date.getDay()];
     }
     const colorStyle = useColorStyle();
+
+    const reverseGeocode = async (locationCoords) => {
+        const reverseGeocodedAddress = await Location.reverseGeocodeAsync({
+            longitude: locationCoords.coords.longitude,
+            latitude: locationCoords.coords.latitude
+        });
+        setAddress(reverseGeocodedAddress);
+    };
+
+    if (locationCoords !== lastLocation) {
+        console.log("Updating Address");
+        setLastLocation(locationCoords);
+        reverseGeocode(locationCoords);
+    }
 
     return (
         <>
@@ -39,7 +57,7 @@ export default function Watch() {
                     opacity: 0.6,
                 }}
             />
-            <View className=' h-full py-16 items-center justify-between'>
+            <View className=' h-full py-12 items-center justify-between'>
                 <View className=' items-center'>
                     <Text style={[fontstyles.home, { color: colorStyle.subText }]}>{date.getDate().toString().padStart(2, '0')} . {getDay()}</Text>
                     <View className=' flex-row items-center'>
@@ -50,8 +68,16 @@ export default function Watch() {
                 </View>
                 <View className=' items-center'>
                     <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}>20°C</Text>
-                    <Text style={[fontstyles.home, { color: colorStyle.subText }]}>Your Address</Text>
-                    <Text style={[fontstyles.homebold, { color: colorStyle.subText }]}>Country</Text>
+                    {Address && Address.length > 0 && Address[0]?.formattedAddress && (
+                        <>
+                            <Text numberOfLines={2} className='text-center' style={[fontstyles.home, { marginBottom: -5, color: colorStyle.subText, lineHeight: 22 }]}>
+                                {Address[0]?.formattedAddress.replace(`, ${Address[0]?.country}`, '')}
+                            </Text>
+                            <Text style={[fontstyles.homebold, { color: colorStyle.subText }]}>
+                                {Address[0]?.country.toUpperCase()}
+                            </Text>
+                        </>
+                    )}
                 </View>
             </View>
         </>
