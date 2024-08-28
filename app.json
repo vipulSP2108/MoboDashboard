@@ -3,7 +3,7 @@
     "name": "StickerSmash",
     "slug": "StickerSmash",
     "version": "1.0.0",
-    "orientation": "landscape",
+    "orientation": "landscape", //portrait landscape
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "splash": {

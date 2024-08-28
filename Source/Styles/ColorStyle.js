@@ -8,6 +8,7 @@ function useColorStyle() {
         diffYellow: '#FFB364',
         mainBg: darkMode ? '#000000' : '#FFFFFF',
         subBg: '#1E2022',
+        iconBg: '#131415',
         mainText: darkMode ? '#FFFFFF' : '#000000',
         subText: '#58595A',
     };

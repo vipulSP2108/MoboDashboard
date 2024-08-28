@@ -13,6 +13,13 @@ export default function Watch() {
     const { fontFamilies, locationCoords } = useContext(GlobalStateContext);
     const fontstyles = FontStyles();
 
+    function capitalize(sentence) {
+        return sentence
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize each word
+            .join(' ');
+    }
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             setDate(new Date());
@@ -42,6 +49,7 @@ export default function Watch() {
         console.log("Updating Address");
         setLastLocation(locationCoords);
         reverseGeocode(locationCoords);
+        console.log(Address);
     }
 
     return (
@@ -67,11 +75,12 @@ export default function Watch() {
                     </View>
                 </View>
                 <View className=' items-center'>
+                    {/* {console.log(Address)} */}
                     <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}>20°C</Text>
                     {Address && Address.length > 0 && Address[0]?.formattedAddress && (
                         <>
                             <Text numberOfLines={2} className='text-center' style={[fontstyles.home, { marginBottom: -5, color: colorStyle.subText, lineHeight: 22 }]}>
-                                {Address[0]?.formattedAddress.replace(`, ${Address[0]?.country}`, '')}
+                                {capitalize(Address[0]?.formattedAddress.replace(`, ${Address[0]?.country}`, ''))}
                             </Text>
                             <Text style={[fontstyles.homebold, { color: colorStyle.subText }]}>
                                 {Address[0]?.country.toUpperCase()}
