@@ -18,6 +18,7 @@ import { Songs } from '../Data/Songs';
 import MusicSongList from '../Tabs/MusicSongList';
 import MusicSongPlayer from '../Tabs/MusicSongPlayer';
 import { MusicFolders } from '../Tabs/MusicFolders';
+import Controllor from '../Components/Controllor';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
@@ -26,7 +27,8 @@ const MusicScreen = () => {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const [selectedFolder, setSelectedFolder] = useState(null);
-
+    const [volumeControl, setVolumeControl] = useState(0);
+    // } ={setVolumeControl
     const backBotton = () => {
         setSelectedFolder(null);
     };
@@ -48,7 +50,8 @@ const MusicScreen = () => {
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                     </View>
-                    <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 4 * oneCell + 3 * oneGap }} />
+                    <Controllor volumeControl={volumeControl} setVolumeControl={setVolumeControl} controllorHeight={1 * oneCell} controllorWidth={4 * oneCell + 3 * oneGap} controllorColor={colorStyle.subBg}/>
+                    {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 4 * oneCell + 3 * oneGap }} /> */}
                 </View>
                 <View style={{ gap: oneGap }}>
                     <View className='overflow-hidden' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: 4 * oneCell + 3 * oneGap, width: 4 * oneCell + 3 * oneGap }} >
