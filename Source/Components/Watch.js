@@ -67,7 +67,7 @@ export default function Watch() {
             />
             <View className=' h-full py-12 items-center justify-between'>
                 <View className=' items-center'>
-                    <Text style={[fontstyles.home, { color: colorStyle.subText }]}>{date.getDate().toString().padStart(2, '0')} . {getDay()}</Text>
+                    <Text style={[fontstyles.home, { color: colorStyle.subText }]}>{date.getDate().toString().padStart(2, '0')}/{(date.getMonth() + 1).toString().padStart(2, '0')} . {getDay()}</Text>
                     <View className=' flex-row items-center'>
                         <Text style={[fontstyles.clock, { color: colorStyle.mainText }]}>{date.getHours().toString().padStart(2, '0')}</Text>
                         <Text style={{ color: colorStyle.mainText }} className=' text-2xl'> : </Text>
@@ -76,7 +76,7 @@ export default function Watch() {
                 </View>
                 <View className=' items-center'>
                     {/* {console.log(Address)} */}
-                    <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}>20°C</Text>
+                    {/* <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: 1 }]}>20°C</Text> */}
                     {Address && Address.length > 0 && Address[0]?.formattedAddress && (
                         <>
                             <Text numberOfLines={2} className='text-center' style={[fontstyles.home, { marginBottom: -5, color: colorStyle.subText, lineHeight: 22 }]}>

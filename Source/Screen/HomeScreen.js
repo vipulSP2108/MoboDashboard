@@ -6,7 +6,7 @@ const setGap = 2
 const BANNER_W = Dimensions.get('window').height * 0.9;
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { View, Animated, Text, Dimensions } from 'react-native';
+import { View, Animated, Text, Dimensions, ImageBackground } from 'react-native';
 import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
@@ -16,12 +16,17 @@ import * as Location from 'expo-location';
 import Icons from '../Components/Icons';
 import Fill from '../Components/Fill';
 import Controllor from '../Components/Controllor';
+import FontStyles from '../Styles/FontStyle';
+import { Ionicons } from '@expo/vector-icons';
+import AC from '../Components/AC';
 
 const HomeScreen = () => {
     const { locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
-
+    // const colorStyle = useColorStyle();
+    const fontstyles = FontStyles();
     const [parentHeight, setParentHeight] = useState(0);
     const parentRef = useRef(null);
+    const [randomness, setRandomness] = useState(Math.floor(Math.random() * 7));
 
     useEffect(() => {
         setOneGap(7 * setGap);
@@ -45,7 +50,9 @@ const HomeScreen = () => {
         setParentHeight(height);
     };
 
-    const [volumeControl, setVolumeControl] = useState(0);
+    const [ACControllor, setACControllor] = useState(20);
+
+
     return (
         <View>
             <Animated.ScrollView
@@ -60,38 +67,14 @@ const HomeScreen = () => {
                 <View style={styles.bannerContainer}>
                     <Animated.View style={styles.banner(scrollA)}>
                         <View style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').height * 0.9 }}>
-                            <Watch />
+                            <Watch ACControllor={ACControllor}/>
                         </View>
                     </Animated.View>
                 </View>
 
                 <View onLayout={handleLayout} ref={parentRef} style={{ margin: 14, columnGap: 12 }} className='flex-row justify-between'>
                     <View style={{ gap: oneGap, flexDirection: 'row' }}>
-                        {/* <View className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 3 * oneCell + 2 * oneGap, width: 1 * oneCell }}>
-                            <View style={{ width: 3 * oneCell + 2 * oneGap, transform: [{ rotate: "-90deg" }] }}>
-                                <Slider
-                                    style={{ height: 3 * oneCell + 2 * oneGap, opacity: 1 }}
-                                    onValueChange={(value) => setVolumeControl(value)}
-                                    vertical={true}
-                                    value={volumeControl}
-                                    minimumValue={0}
-                                    maximumValue={100}
-                                    minimumTrackTintColor={colorStyle.mainText}
-                                    maximumTrackTintColor={colorStyle.mainText}
-                                />
-                            </View>
-                        </View> */}
-                        <View className=' p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 4 * oneCell + 3 * oneGap, width: 2 * oneCell + 3 * oneGap }}>
-                            <Icons iconName={'snow'} mainTextContent={'Air'} subTextContent={'mode | status'} />
-                            <View className='items-end'>
-                                <Controllor volumeControl={volumeControl} setVolumeControl={setVolumeControl} controllorHeight={(3 * oneCell) * 0.7} controllorWidth={(1 * oneCell) * 0.7} controllorColor={colorStyle.iconBg}/>
-                            </View>
-                            <View className=' flex-row justify-between'>
-                                <View className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} />
-                                <View className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} />
-                                <View className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} />
-                            </View>
-                        </View>
+                        <AC randomness={randomness} ACControllor={ACControllor} setACControllor={setACControllor}/>
                     </View>
                 </View>
             </Animated.ScrollView>

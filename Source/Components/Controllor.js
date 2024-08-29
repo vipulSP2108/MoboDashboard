@@ -5,21 +5,27 @@ import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import Slider from '@react-native-community/slider';
+import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Controllor({volumeControl, setVolumeControl, controllorHeight, controllorWidth, controllorColor}) {
+export default function Controllor({ volumeControl, setVolumeControl, controllorHeight, controllorWidth, controllorColor, slide, gradentUp, gradentDown }) {
     const { oneGap, oneCell } = useContext(GlobalStateContext);
-    const colorStyle = useColorStyle();
-    const fontstyles = FontStyles();
+    // const colorStyle = useColorStyle();
+    // const fontstyles = FontStyles();
     return (
         <>
             <View className=' justify-end overflow-hidden' style={{ borderRadius: 12, backgroundColor: controllorColor, height: controllorHeight, width: controllorWidth }} >
-                <Fill value={volumeControl} gradentDown={colorStyle.diffBlue} gradentUp={colorStyle.diffYellow} slide='white' />
+                <LinearGradient
+                    colors={[gradentUp, gradentDown]}
+                    style={{ height: volumeControl + '%' }} className={`px-3 py-1 bg-white w-full rounded-2xl`} >
+                    <View className=' h-1 rounded-full' style={{ backgroundColor: slide, opacity: 0.7 }} />
+                </LinearGradient>
+                {/* <Fill value={volumeControl} slide={slide} gradentUp={gradentUp} gradentDown={gradentDown}/> */}
             </View>
             {/* colorStyle.subBg */}
             <View className=' absolute opacity-0 items-center justify-center' style={{ borderRadius: 12, backgroundColor: 'black', height: controllorHeight, width: controllorWidth }}>
                 <View style={{ width: controllorHeight, transform: [{ rotate: "-90deg" }] }}>
                     <Slider
-                        style={{ height: 3 * oneCell + 2 * oneGap, opacity: 1 }}
+                        style={{ height: 3 * oneCell + 2 * oneGap }}
                         onValueChange={(value) => setVolumeControl(value)}
                         vertical={true}
                         value={volumeControl}

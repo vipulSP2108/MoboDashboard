@@ -17,7 +17,7 @@ export default function Icons({iconName, mainTextContent, subTextContent}) {
             </View>
             <View>
                 <Text style={[fontstyles.homebig, { color: colorStyle.mainText }]}>{mainTextContent}</Text>
-                <Text style={[fontstyles.homesmall, { color: colorStyle.subText }]}>{subTextContent}</Text>
+                <Text style={[fontstyles.homesmall, {  marginTop: 2, color: colorStyle.subText }]}>{subTextContent}</Text>
             </View>
         </View>
     )

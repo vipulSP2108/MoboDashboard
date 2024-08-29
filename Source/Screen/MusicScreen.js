@@ -27,7 +27,9 @@ const MusicScreen = () => {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const [selectedFolder, setSelectedFolder] = useState(null);
-    const [volumeControl, setVolumeControl] = useState(0);
+    const [volumeControl, setVolumeControl] = useState(40);
+
+    const [randomness, setRandomness] = useState(Math.floor(Math.random() * 7));
     // } ={setVolumeControl
     const backBotton = () => {
         setSelectedFolder(null);
@@ -42,7 +44,7 @@ const MusicScreen = () => {
             <View style={{ margin: 12, flexDirection: 'row', gap: oneGap }}>
                 <View style={{ gap: oneGap }}>
                     <View style={{ overflow: 'hidden', borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 4 * oneCell + 3 * oneGap }} >
-                        <MusicSongPlayer />
+                        <MusicSongPlayer randomness={randomness} />
                     </View>
                     <View style={{ gap: oneGap, flexDirection: 'row' }}>
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
@@ -50,7 +52,10 @@ const MusicScreen = () => {
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                     </View>
-                    <Controllor volumeControl={volumeControl} setVolumeControl={setVolumeControl} controllorHeight={1 * oneCell} controllorWidth={4 * oneCell + 3 * oneGap} controllorColor={colorStyle.subBg}/>
+                    <View style={{ transform: [{ rotate: "90deg" }] }}>
+                        <Controllor volumeControl={volumeControl} setVolumeControl={setVolumeControl} controllorHeight={4 * oneCell + 3 * oneGap}
+                            controllorWidth={1 * oneCell} controllorColor={colorStyle.subBg} slide={'white'} gradentUp={colorStyle.diffYellow} gradentDown={colorStyle.diffBlue} />
+                    </View>
                     {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 4 * oneCell + 3 * oneGap }} /> */}
                 </View>
                 <View style={{ gap: oneGap }}>

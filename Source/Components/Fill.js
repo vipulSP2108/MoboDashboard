@@ -7,7 +7,7 @@ export default function Fill({ value, slide, gradentUp, gradentDown }) {
         <LinearGradient
             colors={[gradentUp, gradentDown]}
             style={{ height: value+'%' }} className={`px-3 py-1 bg-white w-full rounded-2xl`} >
-            <View className=' h-[4] rounded-full' style={{backgroundColor: slide, opacity: 0.7}}/>
+            <View className=' h-1 rounded-full' style={{backgroundColor: slide, opacity: 0.7}}/>
         </LinearGradient>
     )
 }
