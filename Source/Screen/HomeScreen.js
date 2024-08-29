@@ -67,14 +67,57 @@ const HomeScreen = () => {
                 <View style={styles.bannerContainer}>
                     <Animated.View style={styles.banner(scrollA)}>
                         <View style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').height * 0.9 }}>
-                            <Watch ACControllor={ACControllor}/>
+                            <Watch oneCell={oneCell} oneGap={oneGap} ACControllor={ACControllor} />
                         </View>
                     </Animated.View>
                 </View>
 
                 <View onLayout={handleLayout} ref={parentRef} style={{ margin: 14, columnGap: 12 }} className='flex-row justify-between'>
                     <View style={{ gap: oneGap, flexDirection: 'row' }}>
-                        <AC randomness={randomness} ACControllor={ACControllor} setACControllor={setACControllor}/>
+                        <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 4 * oneCell + 3 * oneGap, width: 2 * oneCell + 3 * oneGap }}>
+                            <AC oneCell={oneCell} randomness={randomness} ACControllor={ACControllor} setACControllor={setACControllor} />
+                        </View>
+                        <View style={{ gap: oneGap }}>
+                            <View className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                                <Icons
+                                    iconName={'bulb'}
+                                    mainTextContent={'Light'}
+                                    subTextContent={'off'}
+                                />
+                                {/* <View className='bg-slate-300 h-20 w-20 self-center rounded-full -top-1' /> */}
+                            </View>
+                            <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                                <Text style={[fontstyles.home, { marginTop: -3, color: colorStyle.mainText }]}>Temprature</Text>
+                                <View style={{ backgroundColor: colorStyle.diffBlue }} className=' h-24 w-24 self-center justify-center rounded-full -top-1' >
+                                    <View style={{ backgroundColor: colorStyle.subBg }} className='flex-row h-16 w-16 items-center justify-center self-center rounded-full' >
+                                        <Text style={[fontstyles.homebold, { fontSize: 27, marginTop: -11, color: colorStyle.mainText }]}>25</Text>
+                                        <Text style={[fontstyles.homebold, { fontSize: 20, marginTop: -8, color: colorStyle.subText }]}> °c</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{ gap: oneGap }}>
+                            <View className='p-3' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                                <View className=' flex-row gap-x-1 items-center'>
+                                    <Ionicons name={'calendar'} size={0.30 * oneCell} color={colorStyle.mainText} />
+                                    <Text style={[fontstyles.home, { marginTop: -10, color: colorStyle.mainText }]}> Calendar</Text>
+                                </View>
+                                <View className=' bg-white h-4/5 w-full items-center justify-center'>
+                                    <Text>21</Text>
+                                    <Text>Monday</Text>
+                                </View>
+                            </View>
+                            <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                                <View className=' flex-row gap-x-1 items-center'>
+                                    <Ionicons name={'time'} size={0.30 * oneCell} color={colorStyle.mainText} />
+                                    <Text style={[fontstyles.home, { marginTop: -10, color: colorStyle.mainText }]}> Clock</Text>
+                                </View>
+                                <View className=' bg-white h-4/5 w-full items-center justify-center'>
+                                    <Text>21</Text>
+                                    <Text>12</Text>
+                                </View>
+                            </View>
+                        </View>
                     </View>
                 </View>
             </Animated.ScrollView>

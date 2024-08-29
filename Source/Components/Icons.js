@@ -11,13 +11,13 @@ export default function Icons({iconName, mainTextContent, subTextContent}) {
     const fontstyles = FontStyles();
 
     return (
-        <View className=' flex-row gap-3'>
-            <View className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg, height: (1 * oneCell) * 0.6, width: (1 * oneCell) * 0.6 }}>
-                <Ionicons name={iconName} size={0.35 * oneCell} color={colorStyle.diffBlue} />
+        <View className=' flex-row gap-2'>
+            <View className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg, height: (1 * oneCell) * 0.5, width: (1 * oneCell) * 0.5 }}>
+                <Ionicons name={iconName} size={0.30 * oneCell} color={colorStyle.diffBlue} />
             </View>
-            <View>
-                <Text style={[fontstyles.homebig, { color: colorStyle.mainText }]}>{mainTextContent}</Text>
-                <Text style={[fontstyles.homesmall, {  marginTop: 2, color: colorStyle.subText }]}>{subTextContent}</Text>
+            <View >
+                <Text style={[fontstyles.home, { marginTop: -3, color: colorStyle.mainText }]}>{mainTextContent}</Text>
+                <Text style={[fontstyles.homesmall, {  marginTop: 4, color: colorStyle.subText }]}>{subTextContent}</Text>
             </View>
         </View>
     )

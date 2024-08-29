@@ -1,16 +1,14 @@
 import { View, Text, ImageBackground } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import Icons from './Icons'
 import Controllor from './Controllor'
 import { Ionicons } from '@expo/vector-icons'
 import useColorStyle from '../Styles/ColorStyle'
 import FontStyles from '../Styles/FontStyle'
-import { GlobalStateContext } from '../Context/GlobalStateProvider'
 import { LinearGradient } from 'expo-linear-gradient'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function AC({ randomness, ACControllor, setACControllor }) {
-    const { oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext)
+export default function AC({ oneCell, randomness, ACControllor, setACControllor }) {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
 
@@ -28,7 +26,7 @@ export default function AC({ randomness, ACControllor, setACControllor }) {
     const [active, setActive] = useState(true);
 
     return (
-        <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 4 * oneCell + 3 * oneGap, width: 2 * oneCell + 3 * oneGap }}>
+<>
             <Icons
                 iconName={'snow'}
                 mainTextContent={'Air'}
@@ -91,6 +89,6 @@ export default function AC({ randomness, ACControllor, setACControllor }) {
                     <View style={{ height: `${fanSpeed * 25}%`, backgroundColor: colorStyle.subText }} className={`absolute -z-30 w-full bottom-0`} />
                 </TouchableOpacity>
             </View>
-        </View>
+            </>
     )
 }

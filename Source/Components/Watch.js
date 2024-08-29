@@ -1,12 +1,13 @@
-import { View, Text, Image, ImageBackground } from 'react-native'
+import { View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
 import reverseGeocode from './toAddress';
 import * as Location from 'expo-location';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function Watch() {
+export default function Watch({ oneGap, oneCell }) {
     const [date, setDate] = useState(new Date());
     const [lastLocation, setLastLocation] = useState();
     const [Address, setAddress] = useState();
@@ -74,9 +75,8 @@ export default function Watch() {
                         <Text style={[fontstyles.clock, { color: colorStyle.mainText }]}>{date.getMinutes().toString().padStart(2, '0')}</Text>
                     </View>
                 </View>
-                <View className=' items-center'>
-                    {/* {console.log(Address)} */}
-                    {/* <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: 1 }]}>20°C</Text> */}
+                {/* <View className=' items-center'>
+                    <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: 1 }]}>20°C</Text>
                     {Address && Address.length > 0 && Address[0]?.formattedAddress && (
                         <>
                             <Text numberOfLines={2} className='text-center' style={[fontstyles.home, { marginBottom: -5, color: colorStyle.subText, lineHeight: 22 }]}>
@@ -87,6 +87,30 @@ export default function Watch() {
                             </Text>
                         </>
                     )}
+                </View> */}
+                <View className=' flex-row gap-4 top-6'>
+                    <TouchableOpacity className=' h-14 w-[43%] rounded-xl justify-center px-2' style={{ backgroundColor: colorStyle.subBg }}>
+                        <View className=' flex-row gap-2'>
+                            <View className=' p-2 rounded-full'>
+                                <Ionicons name={'bag'} size={20} color={colorStyle.mainText} />
+                            </View>
+                            <View>
+                                <Text style={[fontstyles.home, { marginTop: -3, color: colorStyle.mainText }]}>mainText</Text>
+                                <Text style={[fontstyles.homesmall, { marginTop: 4, color: colorStyle.subText }]}>subText</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity className=' h-14 w-[43%] rounded-xl justify-center px-2' style={{ backgroundColor: colorStyle.subBg }}>
+                        <View className=' flex-row gap-2'>
+                            <View className=' p-2 rounded-full'>
+                                <Ionicons name={'bulb'} size={20} color={colorStyle.mainText} />
+                            </View>
+                            <View>
+                                <Text style={[fontstyles.home, { marginTop: -3, color: colorStyle.mainText }]}>Light</Text>
+                                <Text style={[fontstyles.homesmall, { marginTop: 4, color: colorStyle.subText }]}>on</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         </>
