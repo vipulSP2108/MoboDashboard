@@ -152,7 +152,7 @@ export default function MusicSongPlayer({randomness}) {
                     backgroundColor: 'rgba(0, 0, 0, 0.9)',
                 }}
             />
-            {randomness < 3 ?
+            {randomness < 1 ?
                 <>
                     <View className=' h-2/4 items-center justify-center'>
                         <Text style={[fontstyles.homebig, { color: colorStyle.mainText, marginBottom: -2 }]}>{TruncatedTextComponent(selectedMusic.filename, 21)}</Text>

@@ -6,7 +6,7 @@ const setGap = 2
 const BANNER_W = Dimensions.get('window').height * 0.9;
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { View, Animated, Text, Dimensions, ImageBackground, AppState } from 'react-native';
+import { View, Animated, Text, Dimensions, ImageBackground, AppState, TouchableWithoutFeedback } from 'react-native';
 import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
@@ -20,8 +20,9 @@ import FontStyles from '../Styles/FontStyle';
 import { Ionicons } from '@expo/vector-icons';
 import AC from '../Components/AC';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import AC2x2 from '../Components/AC2x2';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
     const { date, locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
     // const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
@@ -68,7 +69,7 @@ const HomeScreen = ({navigation}) => {
         }
         inactivityTimer.current = setTimeout(() => {
             navigation.navigate('InActiveScreen');
-        }, 30000); // 30 seconds
+        }, 300000); // 30 seconds
     };
 
     useEffect(() => {
@@ -99,6 +100,8 @@ const HomeScreen = ({navigation}) => {
         appState.current = nextAppState;
     };
 
+    const [scrollEnabled, setScrollEnabled] = useState(true);
+
     return (
         <View
             style={styles.container}
@@ -108,6 +111,7 @@ const HomeScreen = ({navigation}) => {
             }}
         >
             <Animated.ScrollView
+                scrollEnabled={scrollEnabled}
                 horizontal
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { x: scrollA } } }],
@@ -130,22 +134,21 @@ const HomeScreen = ({navigation}) => {
                             <AC oneCell={oneCell} randomness={randomness} ACControllor={ACControllor} setACControllor={setACControllor} />
                         </View>
                         <View style={{ gap: oneGap }}>
-                            <TouchableOpacity className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
-                                <Icons
-                                    iconName={'bulb'}
-                                    mainTextContent={'Light'}
-                                    subTextContent={'off'}
-                                />
-                                {/* <View className='bg-slate-300 h-20 w-20 self-center rounded-full -top-1' /> */}
-                            </TouchableOpacity>
-                            <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
-                                <Text style={[fontstyles.home, { marginTop: -3, color: colorStyle.mainText }]}>Temprature</Text>
-                                <View style={{ backgroundColor: colorStyle.diffBlue }} className=' h-24 w-24 self-center justify-center rounded-full -top-1' >
-                                    <View style={{ backgroundColor: colorStyle.subBg }} className='flex-row h-16 w-16 items-center justify-center self-center rounded-full' >
-                                        <Text style={[fontstyles.homebold, { fontSize: 27, marginTop: -11, color: colorStyle.mainText }]}>25</Text>
-                                        <Text style={[fontstyles.homebold, { fontSize: 20, marginTop: -8, color: colorStyle.subText }]}> °c</Text>
-                                    </View>
+                            <View style={{ overflow: 'hidden', borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 4 * oneCell + 1 * oneGap }} >
+                                <MusicSongPlayer randomness={1} />
+                            </View>
+                            <View style={{ gap: oneGap }} className=' flex-row'>
+                                <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                                    <AC2x2 setScrollEnabled={setScrollEnabled}/>
                                 </View>
+                                <TouchableOpacity className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                                    <Icons
+                                        iconName={'bulb'}
+                                        mainTextContent={'Light'}
+                                        subTextContent={'off'}
+                                    />
+                                    {/* <View className='bg-slate-300 h-20 w-20 self-center rounded-full -top-1' /> */}
+                                </TouchableOpacity>
                             </View>
                         </View>
                         <View style={{ gap: oneGap }}>

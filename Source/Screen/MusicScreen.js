@@ -29,7 +29,7 @@ const MusicScreen = () => {
     const [selectedFolder, setSelectedFolder] = useState(null);
     const [volumeControl, setVolumeControl] = useState(40);
 
-    const [randomness, setRandomness] = useState(Math.floor(Math.random() * 7));
+    const [randomness, setRandomness] = useState(Math.floor(Math.random() * 2));
     // } ={setVolumeControl
     const backBotton = () => {
         setSelectedFolder(null);
@@ -44,7 +44,7 @@ const MusicScreen = () => {
             <View style={{ margin: 12, flexDirection: 'row', gap: oneGap }}>
                 <View style={{ gap: oneGap }}>
                     <View style={{ overflow: 'hidden', borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 4 * oneCell + 3 * oneGap }} >
-                        <MusicSongPlayer randomness={randomness} />
+                        <MusicSongPlayer randomness={0} />
                     </View>
                     <View style={{ gap: oneGap, flexDirection: 'row' }}>
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
