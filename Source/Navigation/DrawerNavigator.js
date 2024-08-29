@@ -35,8 +35,8 @@ function CostomDrawerNavigator(props) {
 export default function DrawerNavigator() {
   const colorStyle = useColorStyle();
   return (
-    <NavigationContainer>
-      {/* drawerActiveBackgroundColor: null, drawerActiveTintColor: colorStyle.diffBlue, drawerInactiveTintColor: colorStyle.textMain, drawerStyle: { width: 60, marginTop: -20, backgroundColor: colorStyle.mainbg, justifyContent: 'space-evenly' },  */}
+    // <NavigationContainer>
+      // {/* drawerActiveBackgroundColor: null, drawerActiveTintColor: colorStyle.diffBlue, drawerInactiveTintColor: colorStyle.textMain, drawerStyle: { width: 60, marginTop: -20, backgroundColor: colorStyle.mainbg, justifyContent: 'space-evenly' },  */}
       <Drawer.Navigator drawerContent={props => <CostomDrawerNavigator {...props}/>} screenOptions={{ drawerActiveBackgroundColor: null, drawerType: 'permanent', drawerActiveTintColor: colorStyle.diffBlue, drawerInactiveTintColor: colorStyle.mainText, headerShown: false, drawerStyle: { width: 60, backgroundColor: colorStyle.mainBg} }} initialRouteName="Home">
         <>
         {/* options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: ProfitIcon2 }} */}
@@ -45,6 +45,6 @@ export default function DrawerNavigator() {
           <Drawer.Screen name="ToolsScreen" component={ToolsScreen} options={{ drawerItemStyle: { width: 40 }, drawerLabel: "", drawerIcon: Notifications2_Icon }}/>
         </>
       </Drawer.Navigator>
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 }

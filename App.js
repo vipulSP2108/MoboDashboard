@@ -6,6 +6,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { Provider } from 'react-redux';
 import store from './Source/App/Store';
 import * as Location from 'expo-location';
+import AppNavigator from './Source/Navigation/AppNavigator';
 
 export default function App() {
 
@@ -41,7 +42,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <GlobalStateProvider>
-        <DrawerNavigator />
+        {/* <DrawerNavigator /> */}
+        <AppNavigator />
       </GlobalStateProvider>
     </Provider>
   );

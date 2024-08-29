@@ -6,7 +6,7 @@ const setGap = 2
 const BANNER_W = Dimensions.get('window').height * 0.9;
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { View, Animated, Text, Dimensions, ImageBackground } from 'react-native';
+import { View, Animated, Text, Dimensions, ImageBackground, AppState } from 'react-native';
 import Watch from '../Components/Watch';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
@@ -19,9 +19,10 @@ import Controllor from '../Components/Controllor';
 import FontStyles from '../Styles/FontStyle';
 import { Ionicons } from '@expo/vector-icons';
 import AC from '../Components/AC';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const HomeScreen = () => {
-    const { locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
+const HomeScreen = ({navigation}) => {
+    const { date, locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
     // const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const [parentHeight, setParentHeight] = useState(0);
@@ -52,9 +53,60 @@ const HomeScreen = () => {
 
     const [ACControllor, setACControllor] = useState(20);
 
+    const getDay = () => {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return days[date.getDay()];
+    }
+
+    const inactivityTimer = useRef(null);
+    const appState = useRef(AppState.currentState);
+
+    // Function to reset inactivity timer
+    const resetInactivityTimer = () => {
+        if (inactivityTimer.current) {
+            clearTimeout(inactivityTimer.current);
+        }
+        inactivityTimer.current = setTimeout(() => {
+            navigation.navigate('InActiveScreen');
+        }, 30000); // 30 seconds
+    };
+
+    useEffect(() => {
+        // Set up the inactivity timer when the component mounts
+        resetInactivityTimer();
+
+        // Listen to app state changes
+        const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+        return () => {
+            // Cleanup the timer when the component unmounts
+            if (inactivityTimer.current) {
+                clearTimeout(inactivityTimer.current);
+            }
+            // Remove app state change listener
+            subscription.remove();
+        };
+    }, []);
+
+    // Handle app state change to reset timer on foreground
+    const handleAppStateChange = (nextAppState) => {
+        if (
+            appState.current.match(/inactive|background/) &&
+            nextAppState === 'active'
+        ) {
+            resetInactivityTimer();
+        }
+        appState.current = nextAppState;
+    };
 
     return (
-        <View>
+        <View
+            style={styles.container}
+            onStartShouldSetResponder={() => {
+                resetInactivityTimer();
+                return false; // Indicates this responder doesn't block touches to other components
+            }}
+        >
             <Animated.ScrollView
                 horizontal
                 onScroll={Animated.event(
@@ -78,14 +130,14 @@ const HomeScreen = () => {
                             <AC oneCell={oneCell} randomness={randomness} ACControllor={ACControllor} setACControllor={setACControllor} />
                         </View>
                         <View style={{ gap: oneGap }}>
-                            <View className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                            <TouchableOpacity className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
                                 <Icons
                                     iconName={'bulb'}
                                     mainTextContent={'Light'}
                                     subTextContent={'off'}
                                 />
                                 {/* <View className='bg-slate-300 h-20 w-20 self-center rounded-full -top-1' /> */}
-                            </View>
+                            </TouchableOpacity>
                             <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
                                 <Text style={[fontstyles.home, { marginTop: -3, color: colorStyle.mainText }]}>Temprature</Text>
                                 <View style={{ backgroundColor: colorStyle.diffBlue }} className=' h-24 w-24 self-center justify-center rounded-full -top-1' >
@@ -102,9 +154,10 @@ const HomeScreen = () => {
                                     <Ionicons name={'calendar'} size={0.30 * oneCell} color={colorStyle.mainText} />
                                     <Text style={[fontstyles.home, { marginTop: -10, color: colorStyle.mainText }]}> Calendar</Text>
                                 </View>
-                                <View className=' bg-white h-4/5 w-full items-center justify-center'>
-                                    <Text>21</Text>
-                                    <Text>Monday</Text>
+                                <View className=' h-4/5 w-full items-center justify-center'>
+                                    <Text style={[fontstyles.clock, { color: colorStyle.mainText }]}>{date.getDate().toString().padStart(2, '0')}</Text>
+                                    <Text style={[fontstyles.home, { marginTop: -10, color: colorStyle.subText }]}>{getDay()}</Text>
+                                    {/* {date.getDay().toString().padStart(2, '0')} */}
                                 </View>
                             </View>
                             <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
@@ -112,11 +165,33 @@ const HomeScreen = () => {
                                     <Ionicons name={'time'} size={0.30 * oneCell} color={colorStyle.mainText} />
                                     <Text style={[fontstyles.home, { marginTop: -10, color: colorStyle.mainText }]}> Clock</Text>
                                 </View>
-                                <View className=' bg-white h-4/5 w-full items-center justify-center'>
-                                    <Text>21</Text>
-                                    <Text>12</Text>
+                                <View className=' h-4/5 w-full items-center justify-center'>
+                                    <Text style={[fontstyles.homebold, { fontSize: 45, color: colorStyle.diffBlue }]}>{date.getHours().toString().padStart(2, '0')}</Text>
+                                    <Text style={[fontstyles.homebold, { fontSize: 45, marginTop: -10, color: colorStyle.diffYellow }]}>{date.getMinutes().toString().padStart(2, '0')}</Text>
                                 </View>
                             </View>
+                        </View>
+                        <View style={{ gap: oneGap }}>
+                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
+                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
+                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
+                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
+                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>

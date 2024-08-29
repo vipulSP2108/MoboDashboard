@@ -8,10 +8,9 @@ import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Watch({ oneGap, oneCell }) {
-    const [date, setDate] = useState(new Date());
     const [lastLocation, setLastLocation] = useState();
     const [Address, setAddress] = useState();
-    const { fontFamilies, locationCoords } = useContext(GlobalStateContext);
+    const { fontFamilies, locationCoords, date, setDate } = useContext(GlobalStateContext);
     const fontstyles = FontStyles();
 
     function capitalize(sentence) {
