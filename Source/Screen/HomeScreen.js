@@ -19,11 +19,13 @@ import Controllor from '../Components/Controllor';
 import FontStyles from '../Styles/FontStyle';
 import { Ionicons } from '@expo/vector-icons';
 import AC from '../Components/AC';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import AC2x2 from '../Components/AC2x2';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Light2X2 from '../Components/Light2X2';
+
 
 const HomeScreen = ({ navigation }) => {
-    const { date, locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
+    const { lightStatus, setLightStatus, date, locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
     // const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const [parentHeight, setParentHeight] = useState(0);
@@ -139,15 +141,10 @@ const HomeScreen = ({ navigation }) => {
                             </View>
                             <View style={{ gap: oneGap }} className=' flex-row'>
                                 <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
-                                    <AC2x2 setScrollEnabled={setScrollEnabled}/>
+                                    <AC2x2 setScrollEnabled={setScrollEnabled} />
                                 </View>
-                                <TouchableOpacity className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
-                                    <Icons
-                                        iconName={'bulb'}
-                                        mainTextContent={'Light'}
-                                        subTextContent={'off'}
-                                    />
-                                    {/* <View className='bg-slate-300 h-20 w-20 self-center rounded-full -top-1' /> */}
+                                <TouchableOpacity onPress={() => setLightStatus(!lightStatus)} className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
+                                    <Light2X2 lightStatus={lightStatus}/>
                                 </TouchableOpacity>
                             </View>
                         </View>

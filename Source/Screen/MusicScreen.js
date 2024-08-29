@@ -35,6 +35,24 @@ const MusicScreen = () => {
         setSelectedFolder(null);
     };
 
+    const [muteVolume, setMuteVolume] = useState(false)
+    const [levelVolume, setLevelVolume] = useState(2)
+
+    const renderVolumeIcon = () => {
+        if (muteVolume) {
+            return <Ionicons name='volume-mute' size={0.45 * oneCell} color={colorStyle.diffBlue} />;
+        } else if (levelVolume === 0) {
+            return <Ionicons name='volume-off' size={0.45 * oneCell} color={colorStyle.diffBlue} />;
+        } else if (levelVolume <= 33.33) {
+            return <Ionicons name='volume-low' size={0.45 * oneCell} color={colorStyle.diffBlue} />;
+        } else if (levelVolume <= 66.66) {
+            return <Ionicons name='volume-medium' size={0.45 * oneCell} color={colorStyle.diffBlue} />;
+        } else if (levelVolume <= 100) {
+            return <Ionicons name='volume-high' size={0.45 * oneCell} color={colorStyle.diffBlue} />;
+        }
+        return null;
+    };
+
     return (
         <View style={{ backgroundColor: colorStyle.mainBg, height: Dimensions.get('window').height }}>
             {/* <ScrollView
@@ -47,14 +65,21 @@ const MusicScreen = () => {
                         <MusicSongPlayer randomness={0} />
                     </View>
                     <View style={{ gap: oneGap, flexDirection: 'row' }}>
-                        <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
-                        <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
+                        <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 2 * oneCell + 1 * oneGap }} />
+                        {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} /> */}
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                     </View>
-                    <View style={{ transform: [{ rotate: "90deg" }] }}>
-                        <Controllor volumeControl={volumeControl} setVolumeControl={setVolumeControl} controllorHeight={4 * oneCell + 3 * oneGap}
-                            controllorWidth={1 * oneCell} controllorColor={colorStyle.subBg} slide={'white'} gradentUp={colorStyle.diffYellow} gradentDown={colorStyle.diffBlue} />
+                    <View style={{ gap: oneGap, transform: [{ rotate: "90deg" }] }}>
+                        <View style={{opacity: muteVolume ? 0.45 : 1}}>
+                            <Controllor volumeControl={levelVolume} setVolumeControl={setLevelVolume} controllorHeight={3 * oneCell + 2 * oneGap}
+                                controllorWidth={1 * oneCell} controllorColor={colorStyle.subBg} slide={'white'} gradentUp={colorStyle.diffYellow} gradentDown={colorStyle.diffBlue} />
+                        </View>
+                        <TouchableOpacity onLongPress={() => setLevelVolume(levelVolume < 70 ? levelVolume+33 : 0)} onPress={() => setMuteVolume(!muteVolume)} className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
+                            <View className=' items-center justify-center p-2' style={{ transform: [{ rotate: "-90deg" }], borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                {renderVolumeIcon()}
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 4 * oneCell + 3 * oneGap }} /> */}
                 </View>

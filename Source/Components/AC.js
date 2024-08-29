@@ -36,7 +36,7 @@ export default function AC({ oneCell, randomness, ACControllor, setACControllor 
                 randomness <= 3 ?
                     <>
                         <ImageBackground
-                            source={require('./../../assets/images/AC3.jpg')}
+                            source={require('./../../assets/images/AC3.png')}
                             resizeMode="cover"
                             style={{
                                 top: 70,
@@ -44,10 +44,10 @@ export default function AC({ oneCell, randomness, ACControllor, setACControllor 
                                 width: '75%',
                                 height: '75%',
                                 position: 'absolute',
-                                opacity: 0.6,
+                                opacity: active ? 0.45 : 1
                             }}
                         />
-                        <View className={` items-end ${active && 'opacity-10'}`}>
+                        <View style={{opacity: active ? 0.45 : 1}} className={` items-end `}>
                             <View className=' absolute left-6 top-10 flex-row'>
                                 <Text style={[fontstyles.numsmall, { color: colorStyle.diffBlue }]}>{convertVolumeControl(ACControllor).toFixed()}</Text>
                                 <Text style={[fontstyles.homesmall, { marginTop: 2, color: colorStyle.diffBlue }]}>°c</Text>

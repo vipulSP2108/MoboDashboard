@@ -13,10 +13,8 @@ export default function AC2x2({ setScrollEnabled }) {
                 onPressIn={() => setScrollEnabled(false)}
                 onPressOut={() => setScrollEnabled(true)}
             >
-                <View className=' bg-slate-50  p-1'>
+                <View className=' p-1'>
                     <View
-                        onPressIn={() => setScrollEnabled(false)}
-                        onPressOut={() => setScrollEnabled(true)}
                         style={{ backgroundColor: colorStyle.diffBlue }} className=' h-24 w-24 self-center justify-center rounded-full ' >
                         <View style={{ backgroundColor: colorStyle.subBg }} className='flex-row h-16 w-16 items-center justify-center self-center rounded-full' >
                             <Text style={[fontstyles.homebold, { fontSize: 27, marginTop: -11, color: colorStyle.mainText }]}>25</Text>
