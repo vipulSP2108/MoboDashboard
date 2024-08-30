@@ -99,40 +99,40 @@ const Recording = () => {
                     <>
                         <TouchableOpacity style={{ position: 'absolute', flex: 1, backgroundColor: 'red' }} onPress={() => setIsRecordingModalVisible(false)} />
 
-                            <View style={{
-                                padding: 12,
-                                width: oneCell * 3 + 2 * oneGap,
-                                height: oneCell * (isRecording ? 3 : 2),
-                                backgroundColor: colorStyle.subBg,
-                                borderRadius: 12,
-                                overflow: 'hidden',
-                            }}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Icons
-                                        iconName={'recording'}
-                                        mainTextContent={'Voice Recorder'}
-                                        subTextContent={`Status : ${isRecording ? 'On' : 'Off'}`}
-                                    />
-                                    <Ionicons onPress={() => setIsRecordingModalVisible(false)} name={'close-circle'} size={25} color={colorStyle.mainText} />
-                                </View>
-                                {isRecording && <Image
-                                    source={require('./../../assets/images/sound.gif')}
-                                    resizeMode='center'
-                                    style={{
-                                        top: 15,
-                                        zIndex: -20,
-                                        transform: [{ scale: 2.1 }],
-                                        width: '100%',
-                                        height: '100%',
-                                        position: 'absolute',
-                                        opacity: 0.3,
-                                    }}
-                                />}
-                                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', bottom: 5 }}>
-                                    {!isRecording ? <Ionicons onPress={startRecording} name={'play-circle'} size={45} color={colorStyle.mainText} />
-                                        : <Ionicons onPress={stopRecording} name={'checkmark-done-circle'} size={45} color={colorStyle.mainText} />}
-                                </View>
+                        <View style={{
+                            padding: 12,
+                            width: oneCell * 3 + 2 * oneGap,
+                            height: oneCell * (isRecording ? 3 : 2),
+                            backgroundColor: colorStyle.subBg,
+                            borderRadius: 12,
+                            overflow: 'hidden',
+                        }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Icons
+                                    iconName={'recording'}
+                                    mainTextContent={'Voice Recorder'}
+                                    subTextContent={`Status : ${isRecording ? 'On' : 'Off'}`}
+                                />
+                                <Ionicons onPress={() => setIsRecordingModalVisible(false)} name={'close-circle'} size={25} color={colorStyle.mainText} />
                             </View>
+                            {isRecording && <Image
+                                source={require('./../../assets/images/sound.gif')}
+                                resizeMode='center'
+                                style={{
+                                    top: 15,
+                                    zIndex: -20,
+                                    transform: [{ scale: 2.1 }],
+                                    width: '100%',
+                                    height: '100%',
+                                    position: 'absolute',
+                                    opacity: 0.3,
+                                }}
+                            />}
+                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', bottom: 5 }}>
+                                {!isRecording ? <Ionicons onPress={startRecording} name={'play-circle'} size={45} color={colorStyle.mainText} />
+                                    : <Ionicons onPress={stopRecording} name={'checkmark-done-circle'} size={45} color={colorStyle.mainText} />}
+                            </View>
+                        </View>
                     </>
                 }
             />
@@ -142,22 +142,70 @@ const Recording = () => {
                 backTabON={false}
                 content={
                     <>
-                        <View style={styles.modalBackground}>
-                            <View style={styles.modalContainer}>
-                                <Text style={styles.modalTitle}>Enter Filename</Text>
-                                <TextInput
-                                    value={fileName}
-                                    onChangeText={setFileName}
-                                    placeholder="Filename"
-                                    style={styles.input}
+                        <TouchableOpacity style={{ position: 'absolute', flex: 1, backgroundColor: 'red' }} onPress={() => setIsRecordingModalVisible(false)} />
+
+                        <View style={{
+                            padding: 12,
+                            width: oneCell * 4 + 2 * oneGap,
+                            // height: oneCell * (isRecording ? 3 : 2),
+                            backgroundColor: colorStyle.subBg,
+                            borderRadius: 12,
+                            overflow: 'hidden',
+                        }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Icons
+                                    iconName={'recording'}
+                                    mainTextContent={'Enter Filename'}
+                                    subTextContent={``}
                                 />
-                                <View style={styles.buttonContainer}>
-                                    <Button title="Save" onPress={() => handleSave(fileName)} />
-                                    <Button title="Back" onPress={() => setIsSaveFileModalVisible(false)} />
-                                </View>
+                                {/* <Ionicons onPress={() => setIsSaveFileModalVisible(false)} name={'close-circle'} size={25} color={colorStyle.mainText} /> */}
+                            </View>
+                            <TextInput
+                                value={fileName}
+                                onChangeText={setFileName}
+                                placeholder="Filename"
+                                placeholderTextColor={colorStyle.subText}
+                                style={{
+                                    color: colorStyle.mainText,
+                                    width: '100%',
+                                    borderBottomWidth: 1,
+                                    borderColor: colorStyle.subText,
+                                    marginTop: 20,
+                                    marginBottom: 10,
+                                    // padding: 10,
+                                }}
+                            />
+
+                            <View style={{ gap: 12, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                                <TouchableOpacity style={{ backgroundColor: colorStyle.diffYellow }} onPress={() => setIsSaveFileModalVisible(false)} className=' py-2 px-3 rounded-md '>
+                                    <Text> Delete </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ backgroundColor: colorStyle.diffBlue }} onPress={() => handleSave(fileName)} className=' py-2 px-3 rounded-md '>
+                                    <Text> Save </Text>
+                                </TouchableOpacity>
+
+                                {/* <Button title="Save" onPress={() => handleSave(fileName)} /> */}
+                                {/* <Button title="Back" onPress={() => setIsSaveFileModalVisible(false)} /> */}
                             </View>
                         </View>
                     </>
+                    // <>
+                    //     <View style={styles.modalBackground}>
+                    //         <View style={styles.modalContainer}>
+                    //             <Text style={styles.modalTitle}>Enter Filename</Text>
+                    // <TextInput
+                    //     value={fileName}
+                    //     onChangeText={setFileName}
+                    //     placeholder="Filename"
+                    //     style={styles.input}
+                    // />
+                    //             <View style={styles.buttonContainer}>
+                    // <Button title="Save" onPress={() => handleSave(fileName)} />
+                    // <Button title="Back" onPress={() => setIsSaveFileModalVisible(false)} />
+                    //             </View>
+                    //         </View>
+                    //     </View>
+                    // </>
                 }
             />
         </View>
@@ -166,33 +214,33 @@ const Recording = () => {
 
 const styles = StyleSheet.create({
     modalBackground: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContainer: {
-      width: '80%',
-      backgroundColor: 'white',
-      borderRadius: 10,
-      padding: 20,
-      alignItems: 'center',
+        width: '80%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        alignItems: 'center',
     },
     modalTitle: {
-      fontSize: 18,
-      marginBottom: 10,
+        fontSize: 18,
+        marginBottom: 10,
     },
     input: {
-      width: '100%',
-      borderBottomWidth: 1,
-      marginBottom: 20,
-      padding: 10,
+        width: '100%',
+        borderBottomWidth: 1,
+        marginBottom: 20,
+        padding: 10,
     },
     buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
     },
-  });
+});
 
 export default Recording;

@@ -34,7 +34,7 @@ const MusicScreen = () => {
     };
 
     const [muteVolume, setMuteVolume] = useState(false)
-    const [levelVolume, setLevelVolume] = useState(2)
+    const [levelVolume, setLevelVolume] = useState(70)
 
     const renderVolumeIcon = () => {
         if (muteVolume) {

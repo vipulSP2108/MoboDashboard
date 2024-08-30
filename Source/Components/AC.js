@@ -21,8 +21,8 @@ export default function AC({ oneCell, randomness, ACControllor, setACControllor 
         return newValue;
     }
 
-    const [fanSpeed, setFanSpeed] = useState(0);
-    const [ACmode, setACmode] = useState(1);
+    const [fanSpeed, setFanSpeed] = useState(1);
+    const [ACmode, setACmode] = useState(2);
     const [active, setActive] = useState(true);
 
     return (
@@ -44,10 +44,10 @@ export default function AC({ oneCell, randomness, ACControllor, setACControllor 
                                 width: '75%',
                                 height: '75%',
                                 position: 'absolute',
-                                opacity: active ? 0.45 : 1
+                                opacity: active ? 1 : 0.45
                             }}
                         />
-                        <View style={{opacity: active ? 0.45 : 1}} className={` items-end `}>
+                        <View style={{opacity: active ? 1 : 0.45}} className={` items-end `}>
                             <View className=' absolute left-6 top-10 flex-row'>
                                 <Text style={[fontstyles.numsmall, { color: colorStyle.diffBlue }]}>{convertVolumeControl(ACControllor).toFixed()}</Text>
                                 <Text style={[fontstyles.homesmall, { marginTop: 2, color: colorStyle.diffBlue }]}>°c</Text>
@@ -72,7 +72,7 @@ export default function AC({ oneCell, randomness, ACControllor, setACControllor 
                     </View>
             }
             <View className=' flex-row justify-between'>
-                <TouchableOpacity onPress={() => setActive(!active)} className='items-center justify-center' style={{ borderRadius: 12, backgroundColor: active ? colorStyle.iconBg : 'red', height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+                <TouchableOpacity onPress={() => setActive(!active)} className='items-center justify-center' style={{ borderRadius: 12, backgroundColor: active ?  colorStyle.diffRed : colorStyle.iconBg, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
                     <Ionicons name={'power'} size={29} color={colorStyle.mainText} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setACmode(ACmode < 3 ? ACmode + 1 : 0)} className=' items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >

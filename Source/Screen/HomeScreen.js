@@ -61,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
         setParentHeight(height);
     };
 
-    const [ACControllor, setACControllor] = useState(20);
+    const [ACControllor, setACControllor] = useState(21);
 
     const getDay = () => {
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
