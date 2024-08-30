@@ -7,7 +7,7 @@ function useColorStyle() {
         // pink 662D8C ED1E79
         diffBlue: '#37FEF6',
         diffYellow: '#f28500', //FFB364
-        // red #ff2400
+        diffRed: '#ff2400',
         diffGreen: '#0FFF50',
         mainBg: darkMode ? '#000000' : '#FFFFFF',
         subBg: '#1E2022',

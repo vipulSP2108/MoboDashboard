@@ -1,6 +1,8 @@
 // npx expo install react-native-gesture-handler
 // expo-location
 // npx expo install expo-linear-gradient
+// npx expo install expo-battery
+// expo install expo-file-system
 
 const setGap = 2
 const BANNER_W = Dimensions.get('window').height * 0.9;
@@ -22,9 +24,13 @@ import AC from '../Components/AC';
 import AC2x2 from '../Components/AC2x2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Light2X2 from '../Components/Light2X2';
+import { useBatteryLevel, useBatteryState } from 'expo-battery';
 
 
 const HomeScreen = ({ navigation }) => {
+    const batteryLevel = useBatteryLevel();
+    const batteryState = useBatteryState();
+
     const { lightStatus, setLightStatus, date, locationCoords, setLocationCoords, oneGap, setOneGap, oneCell, setOneCell } = useContext(GlobalStateContext);
     // const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
@@ -105,6 +111,7 @@ const HomeScreen = ({ navigation }) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
 
     return (
+        
         <View
             style={styles.container}
             onStartShouldSetResponder={() => {
@@ -164,7 +171,7 @@ const HomeScreen = ({ navigation }) => {
                                         </TouchableOpacity>
                                         <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell), width: (1 * oneCell) - (0.5 * oneGap) }}>
                                             <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
-                                                <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                                <Ionicons name={'recording'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
                                             </View>
                                         </TouchableOpacity>
                                     </View>
@@ -202,14 +209,19 @@ const HomeScreen = ({ navigation }) => {
                                         <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
                                     </View> */}
                                     <View className=' top-32 right-5'>
-                                        <Ionicons name={'cloud'} size={80} color={colorStyle.diffGreen} />
+                                        <Ionicons name={'cloud'} size={80} color={batteryLevel * 100 <= 10.5 ? colorStyle.diffRed : colorStyle.diffGreen} />
                                     </View>
                                     <View className=' top-14 left-4'>
-                                        <Ionicons name={'cloud'} size={80} color={colorStyle.diffGreen} />
+                                        <Ionicons name={'cloud'} size={80} color={batteryLevel * 100 <= 10.5 ? colorStyle.diffRed : colorStyle.diffGreen} />
                                     </View>
-                                    <View style={{ backgroundColor: colorStyle.diffGreen }} className=' h-[20%] w-full items-center justify-end p-2'>
-                                        <Text style={[fontstyles.homebold, { marginBottom: -7, zIndex: 20, color: colorStyle.mainBg }]}>22%</Text>
+                                    <View style={{ backgroundColor: batteryLevel * 100 <= 10.5 ? colorStyle.diffRed : colorStyle.diffGreen, height: `${(batteryLevel * 100).toString()}%` }} className={` w-full items-center justify-end p-2`}/>
+                                    <View className=' absolute left-5'>
+                                    {batteryState == 1 ?
+                                        <Text style={[fontstyles.homebold, { marginBottom: -1, zIndex: 20, color: colorStyle.mainBg }]}>{(batteryLevel*100).toFixed()}%</Text>
+                                        : <Ionicons name={'battery-charging-outline'} size={33} color={colorStyle.mainBg} />
+                                        }
                                     </View>
+                                    
                                 </View>
                                 <View style={{ gap: oneGap }}>
                                     <TouchableOpacity onPress={() => navigation.navigate('ToolsScreen')} className='p-2 justify-end' style={{ borderRadius: 12, backgroundColor: colorStyle.diffYellow, height: 1 * oneCell, width: 1 * oneCell }}>
