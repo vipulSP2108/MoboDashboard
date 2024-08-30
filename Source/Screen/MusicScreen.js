@@ -18,6 +18,7 @@ import MusicSongPlayer from '../Tabs/MusicSongPlayer';
 import { MusicFolders } from '../Tabs/MusicFolders';
 import Controllor from '../Components/Controllor';
 import TopTabNavigator from '../Navigation/TopTabNavigator';
+import Donut from '../Components/Donut';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
@@ -62,7 +63,16 @@ const MusicScreen = () => {
                         <MusicSongPlayer randomness={0} />
                     </View>
                     <View style={{ gap: oneGap, flexDirection: 'row' }}>
-                        <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 2 * oneCell + 1 * oneGap }} />
+                        <ScrollView horizontal contentContainerStyle={{ alignItems: 'center' }} style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 2 * oneCell + 1 * oneGap }} >
+                            <View className='flex-row p-1 justify-center'>
+                                <Donut percentage={64} color={colorStyle.diffGreen} delay={0} max={100} radius={oneCell / 2.1}
+                                    innerContent={<Ionicons name="phone-portrait-outline" size={25} color={colorStyle.mainText} />} />
+                                <Donut percentage={77} color={colorStyle.diffGreen} delay={0} max={100} radius={oneCell / 2.1}
+                                    innerContent={<Ionicons name="watch-outline" size={25} color={colorStyle.mainText} />} />
+                                <Donut percentage={21} color={colorStyle.diffGreen} delay={0} max={100} radius={oneCell / 2.1}
+                                    innerContent={<Ionicons name="headset-outline" size={25} color={colorStyle.mainText} />} />
+                            </View>
+                        </ScrollView>
                         {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} /> */}
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
@@ -83,7 +93,7 @@ const MusicScreen = () => {
                 <View style={{ gap: oneGap }}>
                     <View className='overflow-hidden' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: 4 * oneCell + 3 * oneGap, width: 4 * oneCell + 3 * oneGap }} >
                         {/* {selectedFolder ? <MusicSongList backBotton={backBotton} folderName={selectedFolder} /> : <MusicFolders setSelectedFolder={setSelectedFolder} />} */}
-                        <TopTabNavigator/>
+                        <TopTabNavigator />
                     </View>
                 </View>
             </View>

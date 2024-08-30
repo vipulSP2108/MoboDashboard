@@ -4,8 +4,11 @@ import React from 'react';
 function useColorStyle() {
     const darkMode = useColorScheme() === 'dark';
     const colors = {
+        // pink 662D8C ED1E79
         diffBlue: '#37FEF6',
-        diffYellow: '#FFB364',
+        diffYellow: '#f28500', //FFB364
+        // red #ff2400
+        diffGreen: '#0FFF50',
         mainBg: darkMode ? '#000000' : '#FFFFFF',
         subBg: '#1E2022',
         iconBg: '#131415',

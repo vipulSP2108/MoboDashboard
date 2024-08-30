@@ -33,7 +33,7 @@ export default function AC({ oneCell, randomness, ACControllor, setACControllor 
                 subTextContent={`${(ACmode % 2 === 0 ? 'Panel' : '')}${(ACmode % 3 === 0 ? 'Floor' : '')}${(ACmode % 3 !== 0 && ACmode % 2 !== 0 ? 'Off' : '')} | Fan x${fanSpeed}`}
             />
             {
-                randomness <= 3 ?
+                randomness <= 6?
                     <>
                         <ImageBackground
                             source={require('./../../assets/images/AC3.png')}
@@ -59,7 +59,7 @@ export default function AC({ oneCell, randomness, ACControllor, setACControllor 
                     :
                     <View className={` items-center gap-3 -mt-7 ${active && 'opacity-10'}`}>
                         <View className=' flex-row items-end justify-end'>
-                            <Text style={[fontstyles.homebold, { fontSize: 39, color: colorStyle.mainText }]}>25</Text>
+                            <Text style={[fontstyles.homebold, { fontSize: 39, color: colorStyle.mainText }]}>{ACControllor}</Text>
                             <Text style={[fontstyles.homebold, { fontSize: 30, marginBottom: -10, color: colorStyle.subText }]}> °c</Text>
                         </View>
                         <LinearGradient

@@ -140,12 +140,35 @@ const HomeScreen = ({ navigation }) => {
                                 <MusicSongPlayer randomness={1} />
                             </View>
                             <View style={{ gap: oneGap }} className=' flex-row'>
-                                <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
-                                    <AC2x2 setScrollEnabled={setScrollEnabled} />
-                                </View>
                                 <TouchableOpacity onPress={() => setLightStatus(!lightStatus)} className='p-2 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell }}>
-                                    <Light2X2 lightStatus={lightStatus}/>
+                                    <Light2X2 lightStatus={lightStatus} />
                                 </TouchableOpacity>
+                                <View style={{ gap: oneGap }} >
+                                    <TouchableOpacity className=' flex-row overflow-hidden p-2 justify-center items-start' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell), width: (2 * oneCell) }}>
+                                        <Text className=' z-30 self-center' style={[fontstyles.clock, { marginTop: -10, color: colorStyle.mainText }]}>20</Text>
+                                        <Text style={[fontstyles.homebig, { zIndex: 20, marginTop: 20, color: colorStyle.mainText }]}> °c</Text>
+                                        <View className=' absolute -bottom-4 left-2'>
+                                            <Ionicons name={'cloud'} size={0.85 * oneCell} color={colorStyle.diffBlue} />
+                                        </View>
+                                        <View className=' absolute -top-4 right-2 rotate-180'>
+                                            <Ionicons name={'cloudy'} size={0.85 * oneCell} color={colorStyle.diffYellow} />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View className=' flex-row' gap={oneGap}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('InActiveScreen')} className='p-2 justify-end' style={{ borderRadius: 12, backgroundColor: colorStyle.diffYellow, height: 1 * oneCell, width: (1 * oneCell) - (0.5 * oneGap) }}>
+                                            <Ionicons name={'moon'} size={0.35 * oneCell} color={colorStyle.mainBg} />
+                                            <View className=' flex-row'>
+                                                <Text style={[fontstyles.homebold, { marginBottom: -7, zIndex: 20, fontSize: 20, color: colorStyle.mainBg }]}>Sleep</Text>
+                                                {/* <Text style={[fontstyles.homesmall, { marginTop: 2, color: colorStyle.subBg }]}>Sleep</Text> */}
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell), width: (1 * oneCell) - (0.5 * oneGap) }}>
+                                            <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                                <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             </View>
                         </View>
                         <View style={{ gap: oneGap }}>
@@ -172,26 +195,42 @@ const HomeScreen = ({ navigation }) => {
                             </View>
                         </View>
                         <View style={{ gap: oneGap }}>
-                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
-                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
-                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+
+                            <View style={{ gap: oneGap }} className=' flex-row'>
+                                <View className=' overflow-hidden justify-end' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 1 * oneCell }}>
+                                    {/* <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                        <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                    </View> */}
+                                    <View className=' top-32 right-5'>
+                                        <Ionicons name={'cloud'} size={80} color={colorStyle.diffGreen} />
+                                    </View>
+                                    <View className=' top-14 left-4'>
+                                        <Ionicons name={'cloud'} size={80} color={colorStyle.diffGreen} />
+                                    </View>
+                                    <View style={{ backgroundColor: colorStyle.diffGreen }} className=' h-[20%] w-full items-center justify-end p-2'>
+                                        <Text style={[fontstyles.homebold, { marginBottom: -7, zIndex: 20, color: colorStyle.mainBg }]}>22%</Text>
+                                    </View>
                                 </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
-                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
-                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                                <View style={{ gap: oneGap }}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('ToolsScreen')} className='p-2 justify-end' style={{ borderRadius: 12, backgroundColor: colorStyle.diffYellow, height: 1 * oneCell, width: 1 * oneCell }}>
+                                        <Ionicons name={'speedometer'} size={0.35 * oneCell} color={colorStyle.mainBg} />
+                                        <View className=' flex-row'>
+                                            <Text style={[fontstyles.homebold, { marginBottom: -7, zIndex: 20, fontSize: 20, color: colorStyle.mainBg }]}>2221</Text>
+                                            <Text style={[fontstyles.homesmall, { marginTop: 2, color: colorStyle.subBg }]}>kms</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => navigation.navigate('ToolsScreen')} className='p-2 justify-end' style={{ borderRadius: 12, backgroundColor: colorStyle.diffBlue, height: 1 * oneCell, width: 1 * oneCell }}>
+                                        <Ionicons name={'leaf'} size={0.35 * oneCell} color={colorStyle.mainBg} />
+                                        <View className=' flex-row'>
+                                            <Text style={[fontstyles.homebold, { marginBottom: -7, zIndex: 20, fontSize: 20, color: colorStyle.mainBg }]}>22.1</Text>
+                                            <Text style={[fontstyles.homesmall, { marginTop: 2, color: colorStyle.subBg }]}>km/l</Text>
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
-                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
-                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
-                                <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
-                                    <Ionicons name={'call'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
-                                </View>
-                            </TouchableOpacity>
+                            </View>
+                            <View className='p-3 justify-between' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 2 * oneCell + 1 * oneGap, width: 2 * oneCell + 1 * oneGap }}>
+                                <AC2x2 ACControllor={ACControllor} setScrollEnabled={setScrollEnabled} />
+                            </View>
                         </View>
                     </View>
                 </View>

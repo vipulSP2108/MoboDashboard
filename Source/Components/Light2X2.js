@@ -14,20 +14,19 @@ export default Light2X2 = ({lightStatus}) => {
                 mainTextContent={'Light'}
                 subTextContent={lightStatus?'On':'Off'}
             />
+            <View className=' w-full h-4/5 items-center justify-center'>
             <ImageBackground
                 source={require('./../../assets/images/Light.png')}
                 resizeMode='contain'
-
                 style={{
-                    top: 70,
-                    right: 5,
-                    transform: [{ scale: 2 }],
-                    width: '105%',
-                    height: '105%',
+                    transform: [{ scale: 1 }],
+                    width: '100%',
+                    height: '100%',
                     position: 'absolute',
                     opacity: lightStatus ? 1 : 0.2,
                 }}
             />
+            </View>
         </View>
     )
 }
