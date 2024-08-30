@@ -69,13 +69,21 @@ const MusicScreen = () => {
                                     innerContent={<Ionicons name="phone-portrait-outline" size={25} color={colorStyle.mainText} />} />
                                 <Donut percentage={77} color={colorStyle.diffGreen} delay={0} max={100} radius={oneCell / 2.1}
                                     innerContent={<Ionicons name="watch-outline" size={25} color={colorStyle.mainText} />} />
-                                <Donut percentage={21} color={colorStyle.diffGreen} delay={0} max={100} radius={oneCell / 2.1}
+                                <Donut percentage={19} color={19 < 20 ? colorStyle.diffRed : colorStyle.diffGreen} delay={0} max={100} radius={oneCell / 2.1}
                                     innerContent={<Ionicons name="headset-outline" size={25} color={colorStyle.mainText} />} />
                             </View>
                         </ScrollView>
                         {/* <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} /> */}
-                        <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
-                        <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
+                        <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell), width: (1 * oneCell) - (0.5 * oneGap) }}>
+                            <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                <Ionicons name={'bluetooth'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell), width: (1 * oneCell) - (0.5 * oneGap) }}>
+                            <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
+                                <Ionicons name={'radio'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     <View style={{ gap: oneGap, transform: [{ rotate: "90deg" }] }}>
                         <View style={{ opacity: muteVolume ? 0.45 : 1 }}>

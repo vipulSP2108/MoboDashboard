@@ -109,9 +109,9 @@ const Recording = () => {
                             }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Icons
-                                        iconName={'bulb'}
+                                        iconName={'recording'}
                                         mainTextContent={'Voice Recorder'}
-                                        subTextContent={`Status : ${isplay ? 'On' : 'Off'}`}
+                                        subTextContent={`Status : ${isRecording ? 'On' : 'Off'}`}
                                     />
                                     <Ionicons onPress={() => setIsRecordingModalVisible(false)} name={'close-circle'} size={25} color={colorStyle.mainText} />
                                 </View>

@@ -172,6 +172,7 @@ const HomeScreen = ({ navigation }) => {
                                         </TouchableOpacity>
                                         <Recording />
                                     </View>
+                                    {/* {console.log(batteryLevel)} */}
                                 </View>
                             </View>
                         </View>
