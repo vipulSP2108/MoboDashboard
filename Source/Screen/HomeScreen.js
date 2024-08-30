@@ -25,6 +25,7 @@ import AC2x2 from '../Components/AC2x2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Light2X2 from '../Components/Light2X2';
 import { useBatteryLevel, useBatteryState } from 'expo-battery';
+import Recording from '../Components/Recording';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -111,7 +112,7 @@ const HomeScreen = ({ navigation }) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
 
     return (
-        
+
         <View
             style={styles.container}
             onStartShouldSetResponder={() => {
@@ -169,11 +170,7 @@ const HomeScreen = ({ navigation }) => {
                                                 {/* <Text style={[fontstyles.homesmall, { marginTop: 2, color: colorStyle.subBg }]}>Sleep</Text> */}
                                             </View>
                                         </TouchableOpacity>
-                                        <TouchableOpacity className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell), width: (1 * oneCell) - (0.5 * oneGap) }}>
-                                            <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
-                                                <Ionicons name={'recording'} size={0.45 * oneCell} color={colorStyle.diffBlue} />
-                                            </View>
-                                        </TouchableOpacity>
+                                        <Recording />
                                     </View>
                                 </View>
                             </View>
@@ -214,14 +211,14 @@ const HomeScreen = ({ navigation }) => {
                                     <View className=' top-14 left-4'>
                                         <Ionicons name={'cloud'} size={80} color={batteryLevel * 100 <= 10.5 ? colorStyle.diffRed : colorStyle.diffGreen} />
                                     </View>
-                                    <View style={{ backgroundColor: batteryLevel * 100 <= 10.5 ? colorStyle.diffRed : colorStyle.diffGreen, height: `${(batteryLevel * 100).toString()}%` }} className={` w-full items-center justify-end p-2`}/>
+                                    <View style={{ backgroundColor: batteryLevel * 100 <= 10.5 ? colorStyle.diffRed : colorStyle.diffGreen, height: `${(batteryLevel * 100).toString()}%` }} className={` w-full items-center justify-end p-2`} />
                                     <View className=' absolute left-5'>
-                                    {batteryState == 1 ?
-                                        <Text style={[fontstyles.homebold, { marginBottom: -1, zIndex: 20, color: colorStyle.mainBg }]}>{(batteryLevel*100).toFixed()}%</Text>
-                                        : <Ionicons name={'battery-charging-outline'} size={33} color={colorStyle.mainBg} />
+                                        {batteryState == 1 ?
+                                            <Text style={[fontstyles.homebold, { marginBottom: -1, zIndex: 20, color: colorStyle.mainBg }]}>{(batteryLevel * 100).toFixed()}%</Text>
+                                            : <Ionicons name={'battery-charging-outline'} size={33} color={colorStyle.mainBg} />
                                         }
                                     </View>
-                                    
+
                                 </View>
                                 <View style={{ gap: oneGap }}>
                                     <TouchableOpacity onPress={() => navigation.navigate('ToolsScreen')} className='p-2 justify-end' style={{ borderRadius: 12, backgroundColor: colorStyle.diffYellow, height: 1 * oneCell, width: 1 * oneCell }}>
