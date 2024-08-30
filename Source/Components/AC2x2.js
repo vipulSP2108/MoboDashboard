@@ -15,7 +15,15 @@ export default function AC2x2({ setScrollEnabled }) {
             >
                 <View className=' p-1'>
                     <View
-                        style={{ backgroundColor: colorStyle.diffBlue }} className=' h-24 w-24 self-center justify-center rounded-full ' >
+                        // backgroundColor: colorStyle.diffBlue,
+                        style={{
+                            backgroundColor: colorStyle.diffBlue,
+                            shadowColor: colorStyle.diffBlue,
+                            shadowOpacity: 0.3, // Shadow opacity
+                            shadowRadius: 20, // Shadow blur radius
+                            shadowOffset: { width: 0, height: 15 }, // Lift effect
+                            elevation: 20,
+                        }} className=' h-24 w-24 self-center justify-center rounded-full ' >
                         <View style={{ backgroundColor: colorStyle.subBg }} className='flex-row h-16 w-16 items-center justify-center self-center rounded-full' >
                             <Text style={[fontstyles.homebold, { fontSize: 27, marginTop: -11, color: colorStyle.mainText }]}>25</Text>
                             <Text style={[fontstyles.homebold, { fontSize: 20, marginTop: -8, color: colorStyle.subText }]}> °c</Text>

@@ -40,7 +40,7 @@ const dummySongs = [
     // Add more dummy songs as needed
 ];
 
-export const MusicFolders = ({ setSelectedFolder }) => {
+export const MusicArtists = ({ setSelectedFolder }) => {
     const [selectedMusic, setSelectedMusic] = useState();
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();

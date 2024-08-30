@@ -40,12 +40,12 @@ const dummySongs = [
     // Add more dummy songs as needed
 ];
 
-export const MusicFolders = ({ setSelectedFolder }) => {
+export const MusicAlbums = ({ setSelectedFolder }) => {
     const [selectedMusic, setSelectedMusic] = useState();
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     return (
-        <>
+        <View className=' items-center' style={{ backgroundColor: colorStyle.subBg }}>
             <View style={{ backgroundColor: colorStyle.subText }} className=' items-center absolute top-14 z-20 w-full flex-row justify-between rounded-b-xl px-3 pb-2 '>
                 <View className=' flex-row items-center'>
                     <Text numberOfLines={1} ellipsizeMode='tail' style={[fontstyles.homesmall, { color: colorStyle.mainText, marginBottom: -2 }]}>Date added </Text>
@@ -55,6 +55,7 @@ export const MusicFolders = ({ setSelectedFolder }) => {
                     <Ionicons name='filter' size={15} color={colorStyle.mainText} />
                 </View>
             </View>
+
             <FlatList
                 // onScroll={handleScroll}
                 onEndReachedThreshold={0.9}
@@ -63,25 +64,21 @@ export const MusicFolders = ({ setSelectedFolder }) => {
                 ListHeaderComponent={
                     <View style={{ backgroundColor: colorStyle.subBg }} className=' flex-row justify-between rounded-t-xl px-3 pt-24' />
                 }
+                numColumns={2}
                 keyboardDismissMode='on-drag'
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={{ backgroundColor: colorStyle.subBg }} className='flex-row items-center justify-between p-3'>
-                        <View className='flex-row'>
-                            <Image className=' w-14 h-14 rounded-lg' source={item.albumArt} />
-                            <View className=' left-3'>
-                                <Text numberOfLines={1} ellipsizeMode='tail' style={[fontstyles.home, { color: item.id === selectedMusic?.id ? colorStyle.diffBlue : colorStyle.mainText, marginBottom: -8 }]}>{TruncatedTextComponent(item.filename, 21)}</Text>
-                                <Text style={[fontstyles.homesmall, { color: colorStyle.subText }]}>{FormatTime(item.duration)}</Text>
-                            </View>
-                        </View>
-                        <Ionicons name='ellipsis-vertical' size={20} color={colorStyle.mainText} />
-                    </TouchableOpacity>
+                    <>
+                        <TouchableOpacity activeOpacity={1} className=' flex-row p-2'>
+                            <Image className='w-36 h-36 rounded-xl' source={item.albumArt} />
+                        </TouchableOpacity>
+                    </>
                 )}
                 // keyExtractor={(item, index) => {`${item.toString()}_${index.toString()}`}}
                 keyExtractor={(item, index) => index.toString()}
             // showsVerticalScrollIndicator={false}
             // {...otherProps}
             />
-        </>
+        </View>
         // <View className=' h-full mt-14' style={{ backgroundColor: colorStyle.subBg }}>
         //     <Button title="Open Folder Rock" onPress={() => setSelectedFolder('Rock')} />
         //     <Button title="Open Folder Pop" onPress={() => setSelectedFolder('Pop')} />

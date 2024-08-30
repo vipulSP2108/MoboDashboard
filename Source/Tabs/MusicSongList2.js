@@ -70,18 +70,18 @@ export default function MusicSongList2({ songs, backBotton, folderName }) {
                     </View>
                 </Animated.View>
                 <View> */}
-                                                <Text style={[fontstyles.home, { color: colorStyle.mainBg }]}>|  {assets.length} items</Text>
-                    <SongList
-                        songs={assets}
-                        onEndReachedThreshold={0.5}
-                        // onEndReached={handleLoadMore}
-                        // onEndReached={() => loadMore()}
-                        ListFooterComponent={() => isLoadingMore ?
-                            <ActivityIndicator size={'large'} color={'red'} />
-                            : null
-                        }
-                    />
-                {/* </View>
+            <Text style={[fontstyles.home, { color: colorStyle.mainBg }]}>|  {assets.length} items</Text>
+            <SongList
+                songs={assets}
+                onEndReachedThreshold={0.5}
+                // onEndReached={handleLoadMore}
+                // onEndReached={() => loadMore()}
+                ListFooterComponent={() => isLoadingMore ?
+                    <ActivityIndicator size={'large'} color={'red'} />
+                    : null
+                }
+            />
+            {/* </View>
             </Animated.ScrollView> */}
         </>
     )

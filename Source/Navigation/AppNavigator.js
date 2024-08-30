@@ -14,7 +14,7 @@ export default function AppNavigator() {
         // Show splash screen for at least 3 seconds
         const timer = setTimeout(() => {
             setIsSplashVisible(false);
-        }, 3000);
+        }, 30);
 
         return () => clearTimeout(timer);
     }, []);

@@ -7,7 +7,7 @@ import useColorStyle from '../Styles/ColorStyle';
 import useMusicLibrary from '../Hooks/useMusicLabrary';
 import SongList from './SongList';
 
-export default function MusicSongList({ songs, backBotton, folderName }) {
+export default function MusicSongList({ backBotton, folderName }) {
     const { assets, isLoadingMore, loadMore } = useMusicLibrary()
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
@@ -90,7 +90,6 @@ export default function MusicSongList({ songs, backBotton, folderName }) {
                 ListFooterComponent={isLoadingMore && <ActivityIndicator size={'large'} color={'red'} />
                 }
             />
-            {console.log(isLoadingMore)}
             {/* </View>
             </Animated.ScrollView> */}
         </>

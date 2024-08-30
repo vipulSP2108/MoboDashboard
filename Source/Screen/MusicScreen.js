@@ -4,8 +4,7 @@
 // npm install @reduxjs/toolkit
 // npm install react-redux
 // npx expo install expo-media-library
-
-
+// @react-navigation/bottom-tabs
 
 import React, { useContext, useRef, useState } from 'react';
 import { View, Animated, Text, Dimensions, ScrollView, ImageBackground, Image, FlatList, TouchableOpacity, Button } from 'react-native';
@@ -14,11 +13,11 @@ import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import { Ionicons } from '@expo/vector-icons';
 import FontStyles from '../Styles/FontStyle';
 
-import { Songs } from '../Data/Songs';
 import MusicSongList from '../Tabs/MusicSongList';
 import MusicSongPlayer from '../Tabs/MusicSongPlayer';
 import { MusicFolders } from '../Tabs/MusicFolders';
 import Controllor from '../Components/Controllor';
+import TopTabNavigator from '../Navigation/TopTabNavigator';
 
 const BANNER_W = Dimensions.get('window').height * 0.9; // Adjust the banner width to your preference
 
@@ -27,8 +26,6 @@ const MusicScreen = () => {
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
     const [selectedFolder, setSelectedFolder] = useState(null);
-    const [volumeControl, setVolumeControl] = useState(40);
-
     const [randomness, setRandomness] = useState(Math.floor(Math.random() * 2));
     // } ={setVolumeControl
     const backBotton = () => {
@@ -71,11 +68,11 @@ const MusicScreen = () => {
                         <View style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }} />
                     </View>
                     <View style={{ gap: oneGap, transform: [{ rotate: "90deg" }] }}>
-                        <View style={{opacity: muteVolume ? 0.45 : 1}}>
+                        <View style={{ opacity: muteVolume ? 0.45 : 1 }}>
                             <Controllor volumeControl={levelVolume} setVolumeControl={setLevelVolume} controllorHeight={3 * oneCell + 2 * oneGap}
                                 controllorWidth={1 * oneCell} controllorColor={colorStyle.subBg} slide={'white'} gradentUp={colorStyle.diffYellow} gradentDown={colorStyle.diffBlue} />
                         </View>
-                        <TouchableOpacity onLongPress={() => setLevelVolume(levelVolume < 70 ? levelVolume+33 : 0)} onPress={() => setMuteVolume(!muteVolume)} className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
+                        <TouchableOpacity onLongPress={() => setLevelVolume(levelVolume < 70 ? levelVolume + 33 : 0)} onPress={() => setMuteVolume(!muteVolume)} className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: 1 * oneCell, width: 1 * oneCell }}>
                             <View className=' items-center justify-center p-2' style={{ transform: [{ rotate: "-90deg" }], borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
                                 {renderVolumeIcon()}
                             </View>
@@ -85,7 +82,8 @@ const MusicScreen = () => {
                 </View>
                 <View style={{ gap: oneGap }}>
                     <View className='overflow-hidden' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: 4 * oneCell + 3 * oneGap, width: 4 * oneCell + 3 * oneGap }} >
-                        {selectedFolder ? <MusicSongList songs={Songs[selectedFolder]} backBotton={backBotton} folderName={selectedFolder} /> : <MusicFolders setSelectedFolder={setSelectedFolder} />}
+                        {/* {selectedFolder ? <MusicSongList backBotton={backBotton} folderName={selectedFolder} /> : <MusicFolders setSelectedFolder={setSelectedFolder} />} */}
+                        <TopTabNavigator/>
                     </View>
                 </View>
             </View>
