@@ -152,40 +152,73 @@
 
 // export default ToolsScreen;
 
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
+import {
+  findNodeHandle,
+  View, Text, StyleSheet, TouchableOpacity, FlatList, Animated, ScrollView,
+  Dimensions
+} from 'react-native'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import CircularProgress from '../Components/CircularProgress';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
+const data = [
+  { key: 'Item 1', label: 'car-battery', ref: React.createRef() },
+  { key: 'Item 2', label: 'car-brake-alert', ref: React.createRef() },
+  // car-brake-low-pressure car-brake-parking car-brake-retarder car-brake-temperature
+  { key: 'Item 3', label: 'car-brake-abs', ref: React.createRef() },
+  { key: 'Item 4', label: 'car-light-high', ref: React.createRef() }, //car-light-dimmed car-parking-lights car-light-alert
+  { key: 'Item 5', label: 'shield-car', ref: React.createRef() },
+  { key: 'Item 6', label: 'car-shift-pattern', ref: React.createRef() },
+  { key: 'Item 7', label: 'car-speed-limiter', ref: React.createRef() },
+  { key: 'Item 8', label: 'fuel', ref: React.createRef() },
+];
 
 export default function ToolsScreen() {
   const { oneGap, oneCell } = useContext(GlobalStateContext);
   const colorStyle = useColorStyle();
   const fontstyles = FontStyles();
-
+  const widths = 180;
   const [vegMode, setVegMode] = useState();
   const [withOBDhub, setWithOBDhub] = useState(false);
+  const scrollX = useRef(new Animated.Value(0)).current;
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [indicator, setIndicator] = useState('off');
+
+
+  const ref = React.useRef();
+  onItemPress = React.useCallback(itemIndex => {
+    setSelectedIndex(itemIndex);
+    ref?.current?.scrollToOffset({
+      offset: itemIndex * widths,
+    })
+  })
+
+  const Tabs = ({ scrollX, data, onItemPress, selectedIndex, setSelectedIndex }) => {
+    return (
+      <View>
+        <View className=' flex-row'>
+          {data.map((item, index) => {
+            return (
+              <TouchableOpacity onPress={() => onItemPress(index)}>
+                {/* {console.log(selectedIndex)} */}
+                <View className=' px-2' ref={item.ref}>
+                  <MaterialCommunityIcons color={selectedIndex == index ? 'white' : 'gray'} name={item.label} size={24} />
+                </View>
+                {/* {console.log((scrollX), Math.floor(widths * index))} */}
+              </TouchableOpacity>
+            )
+          })}
+        </View>
+
+      </View>
+    );
+  };
+
   return (
-    // <View style={{ backgroundColor: colorStyle.mainBg, flex: 1 }}>
-    //   <View style={{ margin: 12, }}>
-    //     <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 4, height: oneCell * 4, backgroundColor: colorStyle.subBg }} >
-    //       <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 3, height: oneCell * 3, backgroundColor: colorStyle.mainBg }} >
-    // <View className=' rounded-full' style={{
-    //   shadowColor: 'white',
-    //   shadowOpacity: 0.26,
-    //   shadowOffset: { width: -1, height: -3 },
-    //   shadowRadius: 10,
-    //   elevation: 20,
-    //   backgroundColor: 'white',
-    //   width: oneCell * 2, height: oneCell * 2, backgroundColor: colorStyle.mainBg
-    // }} >
-    //         </View>
-    //       </View>
-    //     </View>
-    //   </View>
-    // </View>
     <View style={{ backgroundColor: colorStyle.mainBg, flex: 1, justifyContent: 'center' }}>
       {/* <View className=' flex-row items-center justify-end p-3 gap-3'>
         <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
@@ -203,13 +236,28 @@ export default function ToolsScreen() {
         </TouchableOpacity>
       </View> */}
 
-      <View className='flex-row justify-center items-center'>
-        
+      <View className='flex-row justify-center items-center '>
+
         <View style={{ backgroundColor: colorStyle.subBg }} className='absolute left-0 z-50 overflow-hidden rounded-full items-center justify-center'>
           <View className=' absolute content-center'>
-            <CircularProgress opacity={0.2} color1persentage={180} color2persentage={240} />
+            <CircularProgress opacity={0.2} color1persentage={180} color2persentage={264} />
           </View>
-          <View className=' absolute rounded-full items-center justify-center' style={{
+          <View
+    className='absolute z-10'
+    style={{
+      width: 5, // Width of the indicator line
+      height: '15%', // Extend the height to cover half of the circular progress (adjust as needed)
+      backgroundColor: 'white', // Color of the indicator
+      transform: [
+        { translateX: -1 }, // Center the indicator horizontally
+        { rotate: `${-130 + 111}deg` }, // Rotation to align with progress
+        { translateY: -104 } // Move the indicator to start from the center
+      ],
+      shadowColor: 'blue',
+      elevation: 20,
+    }}
+  />
+          <View className=' z-20 absolute rounded-full items-center justify-center' style={{
             shadowColor: colorStyle.mainText,
             shadowOpacity: 0.26,
             shadowOffset: { width: -1, height: -3 },
@@ -218,17 +266,48 @@ export default function ToolsScreen() {
             backgroundColor: 'white',
             width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
           }}>
-            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>80</Text>
+            
+            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>111</Text>
             <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
-            </View>
-          <CircularProgress opacity={1} color1persentage={160} color2persentage={0} />
+          </View>
+          <CircularProgress opacity={1} color1persentage={111} color2persentage={0} />
         </View>
-        
-        <View className=' bg-slate-400 h-44 w-48' />
-        
+
+        <View className=' items-center'>
+          <View className=' z-50 flex-row justify-between' style={{ width: widths - 20 }}>
+            <MaterialCommunityIcons style={{ padding: 2, width: '50%' }} onPress={() => setIndicator(indicator.includes('left') ? 'off' : 'left')} name='chevron-triple-left' size={28} color={indicator == 'left' ? colorStyle.diffBlue : colorStyle.subText} />
+            <MaterialCommunityIcons style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }], padding: 2, width: '50%', alignItems: 'flex-end' }} onPress={() => setIndicator(indicator == 'right' ? 'off' : 'right')} name='chevron-triple-left' size={28} color={indicator == 'right' ? colorStyle.diffBlue : colorStyle.subText} />
+          </View>
+          <View style={{ width: widths }} >
+            <Animated.FlatList
+              data={data}
+              pagingEnabled
+              // bounces
+              ref={ref}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                { useNativeDriver: false }
+              )}
+              renderItem={({ index, item }) => (
+                <View style={{ width: widths }} className=' h-40 items-center'>
+                  <Text style={{ color: 'red' }}>{item.key}</Text>
+                  {/* {console.log(scrollX)} */}
+                </View>
+              )}
+              keyExtractor={(item) => item.key}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+            <ScrollView horizontal className=' h-8 w-full overflow-visible' >
+              <Tabs scrollX={scrollX} data={data} onItemPress={onItemPress} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+            </ScrollView>
+          </View>
+
+        </View>
+
         <View style={{ backgroundColor: colorStyle.subBg }} className='right-0 absolute z-50 overflow-hidden rounded-full items-center justify-center'>
           <View className=' absolute content-center'>
-            <CircularProgress opacity={0.2} color1persentage={180} color2persentage={240} />
+            <CircularProgress opacity={0.2} color1persentage={180} color2persentage={264} />
           </View>
           <View className=' absolute rounded-full items-center justify-center' style={{
             shadowColor: colorStyle.mainText,
@@ -239,15 +318,12 @@ export default function ToolsScreen() {
             backgroundColor: 'white',
             width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
           }}>
-            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>80</Text>
+            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>111</Text>
             <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
-            </View>
+          </View>
           <CircularProgress opacity={1} color1persentage={160} color2persentage={0} />
         </View>
       </View>
-      
-
-
     </View>
   );
 };

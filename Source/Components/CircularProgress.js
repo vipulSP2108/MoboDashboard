@@ -108,7 +108,7 @@ const CircularProgress = ({ color1persentage, color2persentage, opacity }) => {
 
 const styles = StyleSheet.create({
   container: {
-    transform: [{ rotateZ: '150deg' }],
+    transform: [{ rotateZ: '140deg' }],
   },
 });
 
