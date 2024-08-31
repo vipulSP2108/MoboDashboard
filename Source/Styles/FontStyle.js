@@ -47,7 +47,9 @@ const FontStyles = () => {
     numsmall: {
       fontFamily: fontFamilies.Nunito_black, fontSize: 16,
     },
-
+    numlight: {
+      fontFamily: fontFamilies.Nunito_light, fontSize: 30,
+    },
     // entryUpper: {
     //   marginBottom: -1, fontFamily: fontFamilies.Zain_bold, textTransform: 'uppercase', fontSize: 24
     // },

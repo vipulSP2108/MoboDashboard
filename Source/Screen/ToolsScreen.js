@@ -152,17 +152,111 @@
 
 // export default ToolsScreen;
 
-import { View, Text } from 'react-native'
-import React from 'react'
-import Donut from '../Components/Donut'
-// const strokeDashoffset = circumference - (circumference * percentage) / 100;
-  
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useContext, useState } from 'react'
+import FontStyles from '../Styles/FontStyle';
+import useColorStyle from '../Styles/ColorStyle';
+import { GlobalStateContext } from '../Context/GlobalStateProvider';
+import CircularProgress from '../Components/CircularProgress';
+import { Ionicons } from '@expo/vector-icons';
+
 export default function ToolsScreen() {
+  const { oneGap, oneCell } = useContext(GlobalStateContext);
+  const colorStyle = useColorStyle();
+  const fontstyles = FontStyles();
+
+  const [vegMode, setVegMode] = useState();
+  const [withOBDhub, setWithOBDhub] = useState(false);
   return (
-    <View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center' }}>
-        {/* <Donut percentage={90} color={'gold'} delay={50} max={100} radius={34} /> */}
+    // <View style={{ backgroundColor: colorStyle.mainBg, flex: 1 }}>
+    //   <View style={{ margin: 12, }}>
+    //     <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 4, height: oneCell * 4, backgroundColor: colorStyle.subBg }} >
+    //       <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 3, height: oneCell * 3, backgroundColor: colorStyle.mainBg }} >
+    // <View className=' rounded-full' style={{
+    //   shadowColor: 'white',
+    //   shadowOpacity: 0.26,
+    //   shadowOffset: { width: -1, height: -3 },
+    //   shadowRadius: 10,
+    //   elevation: 20,
+    //   backgroundColor: 'white',
+    //   width: oneCell * 2, height: oneCell * 2, backgroundColor: colorStyle.mainBg
+    // }} >
+    //         </View>
+    //       </View>
+    //     </View>
+    //   </View>
+    // </View>
+    <View style={{ backgroundColor: colorStyle.mainBg, flex: 1, justifyContent: 'center' }}>
+      {/* <View className=' flex-row items-center justify-end p-3 gap-3'>
+        <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+          <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
+        </TouchableOpacity>
+        <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+          <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
+        </TouchableOpacity>
+        <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+          <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
+        </TouchableOpacity>
+        <Text style={[fontstyles.homebig, { marginBottom: -1, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub' : 'With Location'}</Text>
+        <TouchableOpacity onPress={() => setWithOBDhub(!withOBDhub)} className='bg'>
+          <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.diffBlue : colorStyle.mainText} />
+        </TouchableOpacity>
+      </View> */}
+
+      <View className='flex-row justify-center items-center'>
+        
+        <View style={{ backgroundColor: colorStyle.subBg }} className='absolute left-0 z-50 overflow-hidden rounded-full items-center justify-center'>
+          <View className=' absolute content-center'>
+            <CircularProgress opacity={0.2} color1persentage={180} color2persentage={240} />
+          </View>
+          <View className=' absolute rounded-full items-center justify-center' style={{
+            shadowColor: colorStyle.mainText,
+            shadowOpacity: 0.26,
+            shadowOffset: { width: -1, height: -3 },
+            shadowRadius: 10,
+            elevation: 20,
+            backgroundColor: 'white',
+            width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
+          }}>
+            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>80</Text>
+            <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
+            </View>
+          <CircularProgress opacity={1} color1persentage={160} color2persentage={0} />
+        </View>
+        
+        <View className=' bg-slate-400 h-44 w-48' />
+        
+        <View style={{ backgroundColor: colorStyle.subBg }} className='right-0 absolute z-50 overflow-hidden rounded-full items-center justify-center'>
+          <View className=' absolute content-center'>
+            <CircularProgress opacity={0.2} color1persentage={180} color2persentage={240} />
+          </View>
+          <View className=' absolute rounded-full items-center justify-center' style={{
+            shadowColor: colorStyle.mainText,
+            shadowOpacity: 0.26,
+            shadowOffset: { width: -1, height: -3 },
+            shadowRadius: 10,
+            elevation: 20,
+            backgroundColor: 'white',
+            width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
+          }}>
+            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>80</Text>
+            <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
+            </View>
+          <CircularProgress opacity={1} color1persentage={160} color2persentage={0} />
+        </View>
       </View>
+      
+
+
     </View>
-  )
-}
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
