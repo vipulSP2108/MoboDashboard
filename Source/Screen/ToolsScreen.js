@@ -163,6 +163,7 @@ import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
 import CircularProgress from '../Components/CircularProgress';
 import { FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Speedo from '../Components/Speedo';
 
 const data = [
   { key: 'Item 1', label: 'car-battery', ref: React.createRef() },
@@ -238,25 +239,26 @@ export default function ToolsScreen() {
 
       <View className='flex-row justify-center items-center '>
 
-        <View style={{ backgroundColor: colorStyle.subBg }} className='absolute left-0 z-50 overflow-hidden rounded-full items-center justify-center'>
+        <View style={{ backgroundColor: colorStyle.mainBg }} className='absolute left-0 z-50 overflow-hidden rounded-full items-center justify-center'>
           <View className=' absolute content-center'>
-            <CircularProgress opacity={0.2} color1persentage={180} color2persentage={264} />
+            <Speedo opacity={0.2} color1persentage={180} color2persentage={264} />
           </View>
           <View
-    className='absolute z-10'
-    style={{
-      width: 5, // Width of the indicator line
-      height: '15%', // Extend the height to cover half of the circular progress (adjust as needed)
-      backgroundColor: 'white', // Color of the indicator
-      transform: [
-        { translateX: -1 }, // Center the indicator horizontally
-        { rotate: `${-130 + 111}deg` }, // Rotation to align with progress
-        { translateY: -104 } // Move the indicator to start from the center
-      ],
-      shadowColor: 'blue',
-      elevation: 20,
-    }}
-  />
+            className='absolute z-10'
+            style={{
+              width: 5, // Width of the indicator line
+              height: '121%', // Extend the height to cover half of the circular progress (adjust as needed)
+              backgroundColor: 'yellow', // Color of the indicator
+              
+              shadowColor: 'yellow',
+              elevation: 10,
+              transform: [
+                { translateX: -1 }, // Center the indicator horizontally
+                { rotate: `${-130 + 111}deg` }, // Rotation to align with progress
+                { translateY: -90 } // Move the indicator to start from the center
+              ],
+            }}
+          />
           <View className=' z-20 absolute rounded-full items-center justify-center' style={{
             shadowColor: colorStyle.mainText,
             shadowOpacity: 0.26,
@@ -266,11 +268,11 @@ export default function ToolsScreen() {
             backgroundColor: 'white',
             width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
           }}>
-            
+
             <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>111</Text>
             <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
           </View>
-          <CircularProgress opacity={1} color1persentage={111} color2persentage={0} />
+          <Speedo opacity={1} color1persentage={111} color2persentage={0} />
         </View>
 
         <View className=' items-center'>
