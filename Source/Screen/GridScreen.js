@@ -152,8 +152,89 @@
 
 // export default ToolsScreen;
 
+// <View style={{ backgroundColor: colorStyle.mainBg, flex: 1 }}>
+//   <View style={{ margin: 12, }}>
+//     <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 4, height: oneCell * 4, backgroundColor: colorStyle.subBg }} >
+//       <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 3, height: oneCell * 3, backgroundColor: colorStyle.mainBg }} >
+//         <View className=' rounded-full' style={{
+//           shadowColor: 'white',
+//           shadowOpacity: 0.26,
+//           shadowOffset: { width: -1, height: -3 },
+//           shadowRadius: 10,
+//           elevation: 20,
+//           backgroundColor: 'white',
+//           width: oneCell * 2, height: oneCell * 2, backgroundColor: colorStyle.mainBg
+//         }} >
+//         </View>
+//       </View>
+//     </View>
+//   </View>
+// </View>
+// <View style={{ backgroundColor: colorStyle.mainBg, flex: 1 }}>
+//   <View className=' flex-row items-center justify-end p-3 gap-3'>
+//     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+//       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
+//     </TouchableOpacity>
+//     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+//       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
+//     </TouchableOpacity>
+//     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+//       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
+//     </TouchableOpacity>
+//     <Text style={[fontstyles.homebig, { marginBottom: -1, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub' : 'With Location'}</Text>
+//     <TouchableOpacity onPress={() => setWithOBDhub(!withOBDhub)} className='bg'>
+//       <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.diffBlue : colorStyle.mainText} />
+//     </TouchableOpacity>
+//   </View>
+//   <View className=' absolute -left-8 top-14 items-center flex-row'>
+//     <View className=' -right-11'>
+//       <View
+//         style={{
+//           // transform: [{ rotate:'180deg' }],
+//           borderLeftWidth: 125, borderRightWidth: 50,
+//           borderBottomWidth: 20,
+//           borderBottomColor: colorStyle.subBg
+//         }} />
+//       <View style={{ backgroundColor: colorStyle.subBg, height: 190}}></View>
+//       <View
+//         style={{
+//           transform: [{ rotate: '180deg' }],
+//           borderLeftWidth: 50, borderRightWidth: 125,
+//           borderBottomWidth: 20,
+//           borderBottomColor: colorStyle.subBg
+//         }} />
+//     </View>
+
+//     <View style={{backgroundColor: colorStyle.subBg}} className='z-50 overflow-hidden rounded-full'>
+//       <View className=' absolute'>
+//         <CircularProgress opacity={0.3} color1persentage={180} color2persentage={240} />
+//       </View>
+//       <CircularProgress opacity={1} color1persentage={160} color2persentage={0} />
+//     </View>
+
+//     <View className=' -left-11'>
+//       <View style={{
+//         borderLeftWidth: 60, borderRightWidth: 250,
+//         borderBottomWidth: 20,
+//         borderBottomColor: colorStyle.subBg
+//       }} />
+//       <View style={{backgroundColor: colorStyle.subBg, height: 190}}></View>
+//       <View style={{
+//         transform: [{ rotate: '180deg' }],
+//         borderLeftWidth: 250, borderRightWidth: 60,
+//         borderBottomWidth: 20,
+//         borderBottomColor: colorStyle.subBg
+//       }} />
+//     </View>
+
+
+//   </View>
+
+
+// </View>
+
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
@@ -167,115 +248,43 @@ export default function GridScreen() {
 
   const [vegMode, setVegMode] = useState();
   const [withOBDhub, setWithOBDhub] = useState(false);
+  
   const maxSpeed = 270;
-  const currentSpeed =210;
+  const currentSpeed = 210;
+
+  const maxRPM = 8;
+  const currentRPM = 3;
+
+  const converted = (value, max) => {
+    // (264 / maxSpeed) * 260;
+    return (264 / max) * value;
+  }
   
   return (
-    // <View style={{ backgroundColor: colorStyle.mainBg, flex: 1 }}>
-    //   <View style={{ margin: 12, }}>
-    //     <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 4, height: oneCell * 4, backgroundColor: colorStyle.subBg }} >
-    //       <View className=' rounded-full items-center justify-center' style={{ width: oneCell * 3, height: oneCell * 3, backgroundColor: colorStyle.mainBg }} >
-    //         <View className=' rounded-full' style={{
-    //           shadowColor: 'white',
-    //           shadowOpacity: 0.26,
-    //           shadowOffset: { width: -1, height: -3 },
-    //           shadowRadius: 10,
-    //           elevation: 20,
-    //           backgroundColor: 'white',
-    //           width: oneCell * 2, height: oneCell * 2, backgroundColor: colorStyle.mainBg
-    //         }} >
-    //         </View>
-    //       </View>
-    //     </View>
-    //   </View>
-    // </View>
-    // <View style={{ backgroundColor: colorStyle.mainBg, flex: 1 }}>
-    //   <View className=' flex-row items-center justify-end p-3 gap-3'>
-    //     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
-    //       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
-    //     </TouchableOpacity>
-    //     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
-    //       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
-    //     </TouchableOpacity>
-    //     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
-    //       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
-    //     </TouchableOpacity>
-    //     <Text style={[fontstyles.homebig, { marginBottom: -1, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub' : 'With Location'}</Text>
-    //     <TouchableOpacity onPress={() => setWithOBDhub(!withOBDhub)} className='bg'>
-    //       <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.diffBlue : colorStyle.mainText} />
-    //     </TouchableOpacity>
-    //   </View>
-    //   <View className=' absolute -left-8 top-14 items-center flex-row'>
-    //     <View className=' -right-11'>
-    //       <View
-    //         style={{
-    //           // transform: [{ rotate:'180deg' }],
-    //           borderLeftWidth: 125, borderRightWidth: 50,
-    //           borderBottomWidth: 20,
-    //           borderBottomColor: colorStyle.subBg
-    //         }} />
-    //       <View style={{ backgroundColor: colorStyle.subBg, height: 190}}></View>
-    //       <View
-    //         style={{
-    //           transform: [{ rotate: '180deg' }],
-    //           borderLeftWidth: 50, borderRightWidth: 125,
-    //           borderBottomWidth: 20,
-    //           borderBottomColor: colorStyle.subBg
-    //         }} />
-    //     </View>
-
-    //     <View style={{backgroundColor: colorStyle.subBg}} className='z-50 overflow-hidden rounded-full'>
-    //       <View className=' absolute'>
-    //         <CircularProgress opacity={0.3} color1persentage={180} color2persentage={240} />
-    //       </View>
-    //       <CircularProgress opacity={1} color1persentage={160} color2persentage={0} />
-    //     </View>
-
-    //     <View className=' -left-11'>
-    //       <View style={{
-    //         borderLeftWidth: 60, borderRightWidth: 250,
-    //         borderBottomWidth: 20,
-    //         borderBottomColor: colorStyle.subBg
-    //       }} />
-    //       <View style={{backgroundColor: colorStyle.subBg, height: 190}}></View>
-    //       <View style={{
-    //         transform: [{ rotate: '180deg' }],
-    //         borderLeftWidth: 250, borderRightWidth: 60,
-    //         borderBottomWidth: 20,
-    //         borderBottomColor: colorStyle.subBg
-    //       }} />
-    //     </View>
-
-
-    //   </View>
-
-
-    // </View>
-
     <View style={{ backgroundColor: '#101010', flex: 1, justifyContent: 'center' }}>
       <View className=' flex-row items-center m-3 justify-between'>
         <View className=' absolute z-50 overflow-hidden rounded-full items-center justify-center border-2 border-cyan-200 p-1'>
-        <View
-        style={{
-          position: 'absolute',
-          zIndex: 10,
-          // transform: [{ rotate: '180deg' }],
-          width: 25,
-          // height: ,
-          borderLeftWidth: 9, borderRightWidth: 10,
-          borderBottomWidth: 110,
-          borderLeftColor: 'transparent',
-          borderRightColor: 'transparent',
-          borderBottomColor: 'yellow',
-          shadowColor: 'yellow',
-          elevation: 20,
-          transform: [
-            { translateX: 1 }, // Center the indicator horizontally
-            { rotate: `${-130 + currentSpeed}deg` }, // Rotation to align with progress
-            { translateY: -57 } // Move the indicator to start from the center
-          ],
-        }} />
-          <Speedo opacity={0.3} color1persentage={180} color2persentage={264} colorsmall1persentage={40} colorsmall2persentage={60} onlyBG={true}/>
+          <View
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              // transform: [{ rotate: '180deg' }],
+              width: 25,
+              // height: ,
+              borderLeftWidth: 9, borderRightWidth: 10,
+              borderBottomWidth: 110,
+              borderLeftColor: 'transparent',
+              borderRightColor: 'transparent',
+              borderBottomColor: 'yellow',
+              shadowColor: 'yellow',
+              elevation: 20,
+              transform: [
+                { translateX: 1 }, // Center the indicator horizontally
+                { rotate: `${-130 + converted(currentSpeed, maxSpeed)}deg` }, // Rotation to align with progress
+                { translateY: -57 } // Move the indicator to start from the center
+              ],
+            }} />
+          <Speedo opacity={0.3} color1persentage={180} color2persentage={264} colorsmall1persentage={40} colorsmall2persentage={60} onlyBG={true} />
           <View className='border-2 border-cyan-200 p-2 z-20 absolute rounded-full items-center justify-center' style={{
             shadowColor: colorStyle.mainText,
             shadowOpacity: 0.26,
@@ -291,13 +300,56 @@ export default function GridScreen() {
 
           <View style={{ backgroundColor: colorStyle.mainBg }} className='absolute flex-row bottom-16 h-10 w-16 z-50' />
           <View className=' absolute'>
-            <Speedo opacity={1} color1persentage={currentSpeed} color2persentage={currentSpeed} colorsmall1persentage={35} colorsmall2persentage={35} maxSpeed={maxSpeed}/>
+            <Speedo opacity={1} color1persentage={converted(currentSpeed, maxSpeed)} color2persentage={converted(currentSpeed, maxSpeed)} colorsmall1persentage={35} colorsmall2persentage={35} maxSpeed={maxSpeed} />
           </View>
         </View>
-        
-        
+
+
+
+        <View className=' right-0 absolute z-50 overflow-hidden rounded-full items-center justify-center border-2 border-cyan-200 p-1'>
+          <View
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              // transform: [{ rotate: '180deg' }],
+              width: 25,
+              // height: ,
+              borderLeftWidth: 9, borderRightWidth: 10,
+              borderBottomWidth: 110,
+              borderLeftColor: 'transparent',
+              borderRightColor: 'transparent',
+              borderBottomColor: 'yellow',
+              shadowColor: 'yellow',
+              elevation: 20,
+              transform: [
+                { translateX: 1 }, // Center the indicator horizontally
+                { rotate: `${-130 + converted(currentRPM, maxRPM)}deg` }, // Rotation to align with progress
+                { translateY: -57 } // Move the indicator to start from the center
+              ],
+            }} />
+          <Speedo opacity={0.3} color1persentage={180} color2persentage={264} colorsmall1persentage={40} colorsmall2persentage={60} onlyBG={true} />
+          <View className='border-2 border-cyan-200 p-2 z-20 absolute rounded-full items-center justify-center' style={{
+            shadowColor: colorStyle.mainText,
+            shadowOpacity: 0.26,
+            shadowOffset: { width: -1, height: -3 },
+            shadowRadius: 10,
+            elevation: 30,
+            backgroundColor: 'white',
+            width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
+          }}>
+            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>{currentRPM}</Text>
+            <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>X1000RPM</Text>
+          </View>
+
+          <View style={{ backgroundColor: colorStyle.mainBg }} className='absolute flex-row bottom-16 h-10 w-16 z-50' />
+          <View className=' absolute'>
+            <Speedo opacity={1} color1persentage={converted(currentRPM, maxRPM)} color2persentage={converted(currentRPM, maxRPM)} colorsmall1persentage={35} colorsmall2persentage={35} maxSpeed={maxRPM} />
+          </View>
+        </View>
+
+
       </View>
-      
+
     </View>
   );
 };

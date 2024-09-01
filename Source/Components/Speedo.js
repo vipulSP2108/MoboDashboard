@@ -150,8 +150,8 @@ const Speedo = ({ color1persentage, color2persentage, colorsmall1persentage, col
                                 fontWeight="bold"
                                 textAnchor="middle"
                             >
-                                {Math.round(i * segmentValue)}
-                                {/* {Math.ceil((i * segmentValue)/ 10) * 10} */}
+                                {/* {Math.round(i * segmentValue)} */}
+                                {Math.ceil((i * segmentValue)/ 1) * 1}
                             </Text>
                         );
                     })}
