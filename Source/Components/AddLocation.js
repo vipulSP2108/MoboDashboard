@@ -6,12 +6,12 @@ import CustomModal from './CostomModel';
 import useColorStyle from '../Styles/ColorStyle';
 import FontStyles from '../Styles/FontStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Icons from './Icons';
 import { Image } from 'react-native';
 import { Text } from 'react-native';
 
-const Recording = () => {
+const AddLocation = () => {
     const { oneCell, setOneCell, oneGap } = useContext(GlobalStateContext)
     const colorStyle = useColorStyle();
     const fontstyles = FontStyles();
@@ -89,7 +89,7 @@ const Recording = () => {
         <View>
             <TouchableOpacity onPress={() => setIsRecordingModalVisible(true)} className='p-2 justify-center items-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell), width: (1 * oneCell) - (0.5 * oneGap) }}>
                 <View className=' items-center justify-center p-2' style={{ borderRadius: 12, backgroundColor: colorStyle.iconBg }}>
-                    <Ionicons name={'recording'} size={0.40 * oneCell} color={colorStyle.diffBlue} />
+                    <MaterialCommunityIcons name={'map-marker-plus'} size={0.40 * oneCell} color={colorStyle.diffBlue} />
                 </View>
             </TouchableOpacity>
             <CustomModal
@@ -243,4 +243,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Recording;
+export default AddLocation;

@@ -178,13 +178,13 @@
 //     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
 //       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
 //     </TouchableOpacity>
-//     <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
-//       <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
-//     </TouchableOpacity>
-//     <Text style={[fontstyles.homebig, { marginBottom: -1, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub' : 'With Location'}</Text>
-//     <TouchableOpacity onPress={() => setWithOBDhub(!withOBDhub)} className='bg'>
-//       <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.diffBlue : colorStyle.mainText} />
-//     </TouchableOpacity>
+// <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+//   <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
+// </TouchableOpacity>
+// <Text style={[fontstyles.homebig, { marginBottom: -1, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub' : 'With Location'}</Text>
+// <TouchableOpacity onPress={() => setWithOBDhub(!withOBDhub)} className='bg'>
+//   <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.diffBlue : colorStyle.mainText} />
+// </TouchableOpacity>
 //   </View>
 //   <View className=' absolute -left-8 top-14 items-center flex-row'>
 //     <View className=' -right-11'>
@@ -232,133 +232,171 @@
 
 
 // </View>
-
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
-import FontStyles from '../Styles/FontStyle';
+import React from 'react';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import useColorStyle from '../Styles/ColorStyle';
-import { GlobalStateContext } from '../Context/GlobalStateProvider';
-import Speedo from '../Components/Speedo';
-import { Ionicons } from '@expo/vector-icons';
+import FontStyles from '../Styles/FontStyle';
 
-export default function GridScreen() {
-  const { oneGap, oneCell } = useContext(GlobalStateContext);
+const LicenseScreen = () => {
   const colorStyle = useColorStyle();
   const fontstyles = FontStyles();
-
-  const [vegMode, setVegMode] = useState();
-  const [withOBDhub, setWithOBDhub] = useState(false);
-  
-  const maxSpeed = 270;
-  const currentSpeed = 210;
-
-  const maxRPM = 8;
-  const currentRPM = 3;
-
-  const converted = (value, max) => {
-    // (264 / maxSpeed) * 260;
-    return (264 / max) * value;
-  }
-  
   return (
-    <View style={{ backgroundColor: '#101010', flex: 1, justifyContent: 'center' }}>
-      <View className=' flex-row items-center m-3 justify-between'>
-        <View className=' absolute z-50 overflow-hidden rounded-full items-center justify-center border-2 border-cyan-200 p-1'>
-          <View
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              // transform: [{ rotate: '180deg' }],
-              width: 25,
-              // height: ,
-              borderLeftWidth: 9, borderRightWidth: 10,
-              borderBottomWidth: 110,
-              borderLeftColor: 'transparent',
-              borderRightColor: 'transparent',
-              borderBottomColor: 'yellow',
-              shadowColor: 'yellow',
-              elevation: 20,
-              transform: [
-                { translateX: 1 }, // Center the indicator horizontally
-                { rotate: `${-130 + converted(currentSpeed, maxSpeed)}deg` }, // Rotation to align with progress
-                { translateY: -57 } // Move the indicator to start from the center
-              ],
-            }} />
-          <Speedo opacity={0.3} color1persentage={180} color2persentage={264} colorsmall1persentage={40} colorsmall2persentage={60} onlyBG={true} />
-          <View className='border-2 border-cyan-200 p-2 z-20 absolute rounded-full items-center justify-center' style={{
-            shadowColor: colorStyle.mainText,
-            shadowOpacity: 0.26,
-            shadowOffset: { width: -1, height: -3 },
-            shadowRadius: 10,
-            elevation: 30,
-            backgroundColor: 'white',
-            width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
-          }}>
-            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>{currentSpeed}</Text>
-            <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
-          </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>Licenses and References</Text>
 
-          <View style={{ backgroundColor: colorStyle.mainBg }} className='absolute flex-row bottom-16 h-10 w-16 z-50' />
-          <View className=' absolute'>
-            <Speedo opacity={1} color1persentage={converted(currentSpeed, maxSpeed)} color2persentage={converted(currentSpeed, maxSpeed)} colorsmall1persentage={35} colorsmall2persentage={35} maxSpeed={maxSpeed} />
-          </View>
-        </View>
-
-
-
-        <View className=' right-0 absolute z-50 overflow-hidden rounded-full items-center justify-center border-2 border-cyan-200 p-1'>
-          <View
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              // transform: [{ rotate: '180deg' }],
-              width: 25,
-              // height: ,
-              borderLeftWidth: 9, borderRightWidth: 10,
-              borderBottomWidth: 110,
-              borderLeftColor: 'transparent',
-              borderRightColor: 'transparent',
-              borderBottomColor: 'yellow',
-              shadowColor: 'yellow',
-              elevation: 20,
-              transform: [
-                { translateX: 1 }, // Center the indicator horizontally
-                { rotate: `${-130 + converted(currentRPM, maxRPM)}deg` }, // Rotation to align with progress
-                { translateY: -57 } // Move the indicator to start from the center
-              ],
-            }} />
-          <Speedo opacity={0.3} color1persentage={180} color2persentage={264} colorsmall1persentage={40} colorsmall2persentage={60} onlyBG={true} />
-          <View className='border-2 border-cyan-200 p-2 z-20 absolute rounded-full items-center justify-center' style={{
-            shadowColor: colorStyle.mainText,
-            shadowOpacity: 0.26,
-            shadowOffset: { width: -1, height: -3 },
-            shadowRadius: 10,
-            elevation: 30,
-            backgroundColor: 'white',
-            width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
-          }}>
-            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>{currentRPM}</Text>
-            <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>X1000RPM</Text>
-          </View>
-
-          <View style={{ backgroundColor: colorStyle.mainBg }} className='absolute flex-row bottom-16 h-10 w-16 z-50' />
-          <View className=' absolute'>
-            <Speedo opacity={1} color1persentage={converted(currentRPM, maxRPM)} color2persentage={converted(currentRPM, maxRPM)} colorsmall1persentage={35} colorsmall2persentage={35} maxSpeed={maxRPM} />
-          </View>
-        </View>
-
-
+      {/* Gratitude Statement */}
+      <View style={styles.section}>
+        <Text style={styles.subHeader}>Acknowledgments</Text>
+        <Text style={styles.text}>
+          I am incredibly thankful to the teams behind Expo and React. Their dedication and hard work in creating powerful and user-friendly development tools have made it possible to bring this application to life. Their open-source contributions not only simplify complex development processes but also empower developers around the world to create amazing apps with ease. Thank you for your invaluable efforts!
+        </Text>
       </View>
 
-    </View>
+      {/* MIT License Description */}
+      <View style={styles.section}>
+        <Text style={styles.subHeader}>MIT License</Text>
+        <Text style={styles.text}>
+          The MIT License is a permissive free software license. This essentially means you can do almost anything with the code, such as using it in proprietary software, as long as you include the original copyright and license notice in any copy of the software. It is simple and easy to understand, and it places very few restrictions on reuse, making it an excellent choice for open-source projects.
+        </Text>
+      </View>
+
+      {/* Library Licenses */}
+      <View style={styles.section}>
+        <Text style={styles.subHeader}>Libraries Used</Text>
+        <Text style={styles.text}>
+          This application uses the following libraries:
+        </Text>
+        <Text style={styles.text}>
+          - @expo/vector-icons: MIT License{'\n'}
+          - @react-native-community/slider: MIT License{'\n'}
+          - @react-navigation/bottom-tabs: MIT License{'\n'}
+          - @react-navigation/drawer: MIT License{'\n'}
+          - @react-navigation/native: MIT License{'\n'}
+          - @react-navigation/native-stack: MIT License{'\n'}
+          - @react-navigation/stack: MIT License{'\n'}
+          - @reduxjs/toolkit: MIT License{'\n'}
+          - expo: MIT License{'\n'}
+          - expo-av: MIT License{'\n'}
+          - expo-battery: MIT License{'\n'}
+          - expo-linear-gradient: MIT License{'\n'}
+          - expo-location: MIT License{'\n'}
+          - expo-media-library: MIT License{'\n'}
+          - expo-sensors: MIT License{'\n'}
+          - expo-status-bar: MIT License{'\n'}
+          - nativewind: MIT License{'\n'}
+          - react: MIT License{'\n'}
+          - react-native: MIT License{'\n'}
+          - react-native-gesture-handler: MIT License{'\n'}
+          - react-native-reanimated: MIT License{'\n'}
+          - react-native-safe-area-context: MIT License{'\n'}
+          - react-native-screens: MIT License{'\n'}
+          - react-native-svg: MIT License{'\n'}
+          - react-redux: MIT License{'\n'}
+          - expo-file-system: MIT License{'\n'}
+        </Text>
+      </View>
+
+      {/* Acknowledgment to Image Contributors */}
+      <View style={styles.section}>
+        <Text style={styles.subHeader}>Image Credits</Text>
+        <Text style={styles.text}>
+          We extend our heartfelt thanks to the talented creators of the images used in this application:
+        </Text>
+        <Text style={styles.text}>
+          {/* - Image by <a href="https://pixabay.com/users/piro4d-2707530/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4242489">PIRO</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4242489">Pixabay</a>. */}
+        </Text>
+        <Text style={styles.text}>
+          {/* - Image by <a href="https://pixabay.com/users/charlvera-11040068/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4609408">Chil Vera</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4609408">Pixabay</a>. */}
+        </Text>
+        <Text style={styles.text}>
+          Your creative work enriches our app, and we are deeply grateful for your contributions!
+        </Text>
+      </View>
+
+      {/* Font Credits */}
+<View style={styles.section}>
+  <Text style={styles.subHeader}>Font Credits</Text>
+  <Text style={styles.text}>
+    This application uses the following custom fonts:
+  </Text>
+  <Text style={styles.text}>
+    - **Zain Font Family**: Zain-Black, Zain-ExtraBold, Zain-Bold, Zain-Light, Zain-ExtraLight, Zain-Regular.
+  </Text>
+  <Text style={styles.text}>
+    - **Montserrat Font Family**: Montserrat-Black, Montserrat-ExtraBold, Montserrat-Bold, Montserrat-Light, Montserrat-ExtraLight, Montserrat-Medium. Montserrat is a Google Font available under the Open Font License.
+  </Text>
+  <Text style={styles.text}>
+    Special thanks to the designers of these fonts for their contributions, which help make our app's text more readable and visually appealing!
+  </Text>
+</View>
+
+      {/* Special Thanks */}
+      <View style={styles.section}>
+        <Text style={styles.subHeader}>Special Thanks</Text>
+        <Text style={styles.text}>
+          We would like to express our gratitude to the following:
+        </Text>
+        <Text style={styles.text}>
+          - **PIRO** and **Chil Vera** from Pixabay for providing beautiful images that enhance the visual appeal of our app.
+        </Text>
+        <Text style={styles.text}>
+          - The creators of **Ionicons** and **MaterialCommunityIcons** included in `@expo/vector-icons` for providing a rich set of icons that help make our application more intuitive and user-friendly.
+        </Text>
+        <Text style={styles.text}>
+          We are incredibly thankful for your contributions, which have been essential in making this app better!
+        </Text>
+      </View>
+
+
+      {/* Additional References */}
+      <View style={styles.section}>
+        <Text style={styles.subHeader}>Additional References</Text>
+        <Text style={styles.text}>
+          - Icons provided by @expo/vector-icons are based on Material Icons,
+          licensed under the Apache License 2.0.
+        </Text>
+        <Text style={styles.text}>
+          - Fonts used in this application are part of the Google Fonts library.
+        </Text>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: '#000',
+  },
+  header: {
+color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  subHeader: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  text: {
+    color: 'white',
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 10,
   },
 });
+
+export default LicenseScreen;
+
+
+
+
+
+
+

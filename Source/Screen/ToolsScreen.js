@@ -152,44 +152,61 @@
 
 // export default ToolsScreen;
 
-import {
-  findNodeHandle,
-  View, Text, StyleSheet, TouchableOpacity, FlatList, Animated, ScrollView,
-  Dimensions
-} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import FontStyles from '../Styles/FontStyle';
 import useColorStyle from '../Styles/ColorStyle';
 import { GlobalStateContext } from '../Context/GlobalStateProvider';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Speedo from '../Components/Speedo';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Speedo2 from '../Components/Speedo2';
+import Recording from '../Components/Recording';
+import AddLocation from '../Components/AddLocation';
 
-const data = [
-  { key: 'Item 1', label: 'decagram', ref: React.createRef() },
-  { key: 'Item 2', label: 'car-battery', ref: React.createRef() },
-  { key: 'Item 3', label: 'car-brake-alert', ref: React.createRef() },
-  // car-brake-low-pressure car-brake-parking car-brake-retarder car-brake-temperature
-  { key: 'Item 4', label: 'car-brake-abs', ref: React.createRef() },
-  { key: 'Item 5', label: 'car-light-high', ref: React.createRef() }, //car-light-dimmed car-parking-lights car-light-alert
-  { key: 'Item 6', label: 'shield-car', ref: React.createRef() },
-  { key: 'Item 7', label: 'car-shift-pattern', ref: React.createRef() },
-  { key: 'Item 8', label: 'car-speed-limiter', ref: React.createRef() },
-  { key: 'Item 9', label: 'fuel', ref: React.createRef() },
-  { key: 'Item 10', label: 'decagram', ref: React.createRef() },
-];
 
-export default function ToolsScreen() {
+
+export default function GridScreen() {
   const { oneGap, oneCell } = useContext(GlobalStateContext);
   const colorStyle = useColorStyle();
   const fontstyles = FontStyles();
-  const widths = 230;
+
+  const data = [
+    // { key: 'Item 1', label: 'decagram', ref: React.createRef() },
+    { key: 'Item 2', label: 'car-battery', ref: React.createRef() },
+    {
+      key: 'Item 3', label: 'navigation-variant', ref: React.createRef(),
+      content: (<>
+        <View className=' flex-row items-center justify-center mr-2'>
+          <MaterialCommunityIcons name='arrow-left-top-bold' size={44} color={colorStyle.diffGreen} />
+          <Text style={[fontstyles.clock, { fontSize: 25, color: colorStyle.mainText }]}>900</Text>
+          <Text style={[fontstyles.homebold, { color: colorStyle.mainText }]}> m</Text>
+        </View>
+        <Text style={[fontstyles.homebold, { color: colorStyle.subText }]}>Take Exit to EH1</Text>
+      </>)
+    },
+    // car-brake-low-pressure car-brake-parking car-brake-retarder car-brake-temperature
+    { key: 'Item 4', label: 'leaf', ref: React.createRef() },
+    { key: 'Item 5', label: 'car-light-high', ref: React.createRef() }, //car-light-dimmed car-parking-lights car-light-alert
+    { key: 'Item 6', label: 'shield-car', ref: React.createRef() },
+    { key: 'Item 7', label: 'car-shift-pattern', ref: React.createRef() },
+    { key: 'Item 8', label: 'car-speed-limiter', ref: React.createRef() },
+    { key: 'Item 9', label: 'fuel', ref: React.createRef() },
+    // { key: 'Item 10', label: 'decagram', ref: React.createRef() },
+  ];
+
   const [vegMode, setVegMode] = useState();
   const [withOBDhub, setWithOBDhub] = useState(false);
+
+  const maxSpeed = 180;
+  const currentSpeed = 121;
+
+  const maxRPM = 9;
+  const currentRPM = 3.7;
+
+  const widths = 170;
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [indicator, setIndicator] = useState('off');
-
 
   const ref = React.useRef();
   onItemPress = React.useCallback(itemIndex => {
@@ -199,15 +216,9 @@ export default function ToolsScreen() {
     })
   })
 
-  const maxSpeed = 270;
-  const currentSpeed = 210;
-
-  const maxRPM = 8;
-  const currentRPM = 3;
-
   const converted = (value, max) => {
     // (264 / maxSpeed) * 260;
-    return (264 / max) * value;
+    return (72 / max) * value;
   }
 
   const Tabs = ({ scrollX, data, onItemPress, selectedIndex, setSelectedIndex }) => {
@@ -218,7 +229,7 @@ export default function ToolsScreen() {
             return (
               <TouchableOpacity onPress={() => onItemPress(index)}>
                 {/* {console.log(selectedIndex)} */}
-                <View className=' px-2' ref={item.ref}>
+                <View className='z-50 px-2' ref={item.ref}>
                   <MaterialCommunityIcons color={selectedIndex == index ? 'white' : 'gray'} name={item.label} size={24} />
                 </View>
                 {/* {console.log((scrollX), Math.floor(widths * index))} */}
@@ -231,140 +242,188 @@ export default function ToolsScreen() {
     );
   };
 
+  const date = new Date();
+
+  const getDay = () => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay()];
+  }
+
   return (
-    <View style={{ padding: 5, backgroundColor: colorStyle.mainBg, flex: 1, justifyContent: 'center' }}>
-      {/* <View className=' flex-row items-center justify-end p-3 gap-3'>
-        <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
-          <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
-        </TouchableOpacity>
-        <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
-          <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
-        </TouchableOpacity>
-        <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subText, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
-          <Ionicons name={'medical'} size={29} color={colorStyle.mainText} />
-        </TouchableOpacity>
-        <Text style={[fontstyles.homebig, { marginBottom: -1, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub' : 'With Location'}</Text>
-        <TouchableOpacity onPress={() => setWithOBDhub(!withOBDhub)} className='bg'>
-          <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.diffBlue : colorStyle.mainText} />
-        </TouchableOpacity>
-      </View> */}
-
-      <View className='flex-row justify-center items-center '>
-
-        <View style={{ backgroundColor: '#101010' }} className=' absolute left-0 z-50 overflow-hidden rounded-full items-center justify-center border-2 border-cyan-200 p-1'>
-          <View
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              // transform: [{ rotate: '180deg' }],
-              width: 25,
-              // height: ,
-              borderLeftWidth: 9, borderRightWidth: 10,
-              borderBottomWidth: 110,
-              borderLeftColor: 'transparent',
-              borderRightColor: 'transparent',
-              borderBottomColor: 'yellow',
-              shadowColor: 'yellow',
-              elevation: 20,
-              transform: [
-                { translateX: 1 }, // Center the indicator horizontally
-                { rotate: `${-130 + converted(currentSpeed, maxSpeed)}deg` }, // Rotation to align with progress
-                { translateY: -57 } // Move the indicator to start from the center
-              ],
-            }} />
-          <Speedo opacity={0.3} color1persentage={180} color2persentage={264} colorsmall1persentage={40} colorsmall2persentage={60} onlyBG={true} />
-          <View className='border-2 border-cyan-200 p-2 z-20 absolute rounded-full items-center justify-center' style={{
-            shadowColor: colorStyle.mainText,
-            shadowOpacity: 0.26,
-            shadowOffset: { width: -1, height: -3 },
-            shadowRadius: 10,
-            elevation: 30,
-            backgroundColor: 'white',
-            width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
-          }}>
-            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>{currentSpeed}</Text>
-            <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
+    <>
+      <View style={{ padding: 5, backgroundColor: colorStyle.mainBg, flex: 1, justifyContent: 'center' }}>
+        <View className=' top-4 flex-row justify-center items-center '>
+          <View style={{ backgroundColor: colorStyle.mainBg }} className=' z-10 absolute left-0 rounded-full items-center justify-center'>
+            <Speedo2 gcolor={colorStyle.diffBlue} g2color={colorStyle.diffBlue} percentage={converted(currentSpeed, maxSpeed)} />
+            <View
+              style={{
+                position: 'absolute',
+                zIndex: 10,
+                // transform: [{ rotate: '180deg' }],
+                width: 25,
+                // height: ,
+                borderLeftWidth: 11, borderRightWidth: 11,
+                borderBottomWidth: 70,
+                borderLeftColor: 'transparent',
+                borderRightColor: 'transparent',
+                borderBottomColor: 'red',
+                shadowColor: 'red',
+                elevation: 20,
+                transform: [
+                  { translateX: 1 }, // Center the indicator horizontally
+                  { rotate: `${(currentSpeed * (264 / maxSpeed)) - 130}deg` }, // Rotation to align with progress
+                  { translateY: -57 } // Move the indicator to start from the center
+                ],
+              }} />
+            <View className={` p-2 z-20 absolute rounded-full items-center justify-center`} style={{
+              borderColor: colorStyle.diffBlue,
+              borderWidth: 1,
+              shadowColor: colorStyle.mainText,
+              shadowOpacity: 0.26,
+              shadowOffset: { width: -1, height: -3 },
+              shadowRadius: 10,
+              elevation: 30,
+              backgroundColor: 'white',
+              width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
+            }}>
+              <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>{currentSpeed}</Text>
+              <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>KM/H</Text>
+            </View>
           </View>
 
-          <View style={{ backgroundColor: colorStyle.mainBg }} className='absolute flex-row bottom-16 h-10 w-16 z-50' />
-          <View className=' absolute'>
-            <Speedo opacity={1} color1persentage={converted(currentSpeed, maxSpeed)} color2persentage={converted(currentSpeed, maxSpeed)} colorsmall1persentage={35} colorsmall2persentage={35} maxSpeed={maxSpeed} />
+          <View className=' z-50 -top-10 absolute flex-row justify-center items-center'>
+            <Text style={[fontstyles.homebig, { marginBottom: -2, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub' : 'With Location'}</Text>
+            <TouchableOpacity className='ml-2 items-center justify-center' onPress={() => setWithOBDhub(!withOBDhub)}>
+              <View style={{ backgroundColor: withOBDhub ? colorStyle.subBg : colorStyle.subBg }} className=' absolute w-9 h-5 rounded-full' />
+              <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.mainText : colorStyle.mainText} />
+            </TouchableOpacity>
           </View>
+
+
+          <View className='z-50 overflow-hidden items-center'>
+            {/* <View className=' flex-row justify-center items-center mb-8' style={{ width: widths - 20 }}>
+            <Text style={[fontstyles.homebig, { marginBottom: -2, color: colorStyle.mainText }]}>{withOBDhub ? 'With OBDHub ' : 'With Location '}</Text>
+            <TouchableOpacity onPress={() => setWithOBDhub(!withOBDhub)} className='bg'>
+              <Ionicons name='toggle' size={38} style={{ transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }] }} color={withOBDhub ? colorStyle.diffBlue : colorStyle.mainText} />
+            </TouchableOpacity>
+          </View> */}
+
+            {/* <MaterialCommunityIcons style={{ paddingHorizontal: 32, width: '50%' }} onPress={() => setIndicator(indicator.includes('left') ? 'off' : 'left')} name='chevron-triple-left' size={28} color={indicator == 'left' ? colorStyle.diffBlue : colorStyle.subText} />
+            <MaterialCommunityIcons style={{ paddingHorizontal: 32, transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }], padding: 2, width: '50%', alignItems: 'flex-end' }} onPress={() => setIndicator(indicator == 'right' ? 'off' : 'right')} name='chevron-triple-left' size={28} color={indicator == 'right' ? colorStyle.diffBlue : colorStyle.subText} /> */}
+
+            <View style={{ width: widths }} >
+              <Animated.FlatList
+                data={data}
+                pagingEnabled
+                // bounces
+                ref={ref}
+                onScroll={Animated.event(
+                  [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                  { useNativeDriver: false }
+                )}
+                renderItem={({ index, item }) => (
+                  <View style={{ width: widths }} className=' h-40 items-center'>
+                    <Text style={[fontstyles.home, { color: colorStyle.mainText }]}>{item.label.replace(/\b\w/g, char => char.toUpperCase()).replace(/-/g, ' ')}</Text>
+                    <View className=' items-center justify-center flex-1'>
+{item.content && item.content}
+                    </View>
+                  </View>
+                )}
+                keyExtractor={(item) => item.key}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+              <ScrollView horizontal className='h-8 w-full z-50 overflow-visible' >
+                <Tabs scrollX={scrollX} data={data} onItemPress={onItemPress} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+              </ScrollView>
+            </View>
+          </View>
+
+
+          <View style={{ backgroundColor: colorStyle.mainBg }} className=' z-10 rounded-full absolute right-0 items-center justify-center'>
+            <Speedo2 gcolor={colorStyle.diffYellow} g2color={colorStyle.diffYellow} percentage={converted(currentRPM, maxRPM)} />
+            <View
+              style={{
+                position: 'absolute',
+                zIndex: 10,
+                // transform: [{ rotate: '180deg' }],
+                width: 25,
+                // height: ,
+                borderLeftWidth: 11, borderRightWidth: 11,
+                borderBottomWidth: 70,
+                borderLeftColor: 'transparent',
+                borderRightColor: 'transparent',
+                borderBottomColor: 'red',
+                shadowColor: 'red',
+                elevation: 20,
+                transform: [
+                  { translateX: 1 }, // Center the indicator horizontally
+                  { rotate: `${(currentRPM * (264 / maxRPM)) - 130}deg` }, // Rotation to align with progress
+                  { translateY: -57 } // Move the indicator to start from the center
+                ],
+              }} />
+            <View className={` p-2 z-20 absolute rounded-full items-center justify-center`} style={{
+              borderColor: colorStyle.diffBlue,
+              borderWidth: 1,
+              shadowColor: colorStyle.mainText,
+              shadowOpacity: 0.26,
+              shadowOffset: { width: -1, height: -3 },
+              shadowRadius: 10,
+              elevation: 30,
+              backgroundColor: 'white',
+              width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
+            }}>
+              <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>{currentRPM}</Text>
+              <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>X1000RPM</Text>
+            </View>
+          </View>
+
+
         </View>
 
-        <View className=' border-y-2 border-cyan-200 items-center'>
-          <View className=' z-50 flex-row justify-between' style={{ width: widths - 20 }}>
-            <MaterialCommunityIcons style={{ paddingHorizontal: 32, width: '50%' }} onPress={() => setIndicator(indicator.includes('left') ? 'off' : 'left')} name='chevron-triple-left' size={28} color={indicator == 'left' ? colorStyle.diffBlue : colorStyle.subText} />
-            <MaterialCommunityIcons style={{ paddingHorizontal: 32, transform: [{ rotate: withOBDhub ? '0deg' : '180deg' }], padding: 2, width: '50%', alignItems: 'flex-end' }} onPress={() => setIndicator(indicator == 'right' ? 'off' : 'right')} name='chevron-triple-left' size={28} color={indicator == 'right' ? colorStyle.diffBlue : colorStyle.subText} />
+      </View>
+      <View style={{ backgroundColor: colorStyle.mainBg }} className=' z-50 flex-row items-center justify-between px-3 py-1'>
+        <View>
+          <View className=' flex-row items-baseline'>
+            <Text style={[fontstyles.numsmall, { marginBottom: -4, fontSize: 21, color: colorStyle.mainText }]}>{date.getHours().toString().padStart(2, '0')}</Text>
+            <Text style={{ color: colorStyle.mainText }} className=' text-xl'> : </Text>
+            <Text style={[fontstyles.numsmall, { fontSize: 21, color: colorStyle.mainText }]}>{date.getMinutes().toString().padStart(2, '0')}</Text>
+            <Text style={[fontstyles.home, { color: colorStyle.subText }]}>    {date.getDate().toString().padStart(2, '0')}/{(date.getMonth() + 1).toString().padStart(2, '0')}</Text>
           </View>
-          <View style={{ width: widths }} >
-            <Animated.FlatList
-              data={data}
-              pagingEnabled
-              // bounces
-              ref={ref}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                { useNativeDriver: false }
-              )}
-              renderItem={({ index, item }) => (
-                <View style={{ width: widths }} className=' h-40 items-center'>
-                  <Text style={{ color: colorStyle.diffYellow }}>{item.label.replace(/\b\w/g, char => char.toUpperCase()).replace(/-/g, ' ')}</Text>
-                  {/* {console.log(scrollX)} */}
-                </View>
-              )}
-              keyExtractor={(item) => item.key}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
-            <ScrollView horizontal className=' h-8 w-full overflow-visible' >
-              <Tabs scrollX={scrollX} data={data} onItemPress={onItemPress} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
-            </ScrollView>
-          </View>
+          <Text style={[fontstyles.home, { color: colorStyle.mainText }]}>{getDay()}</Text>
         </View>
-
-        <View style={{ backgroundColor: '#101010' }} className=' right-0 absolute z-50 overflow-hidden rounded-full items-center justify-center border-2 border-cyan-200 p-1'>
-          <View
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              // transform: [{ rotate: '180deg' }],
-              width: 25,
-              // height: ,
-              borderLeftWidth: 9, borderRightWidth: 10,
-              borderBottomWidth: 110,
-              borderLeftColor: 'transparent',
-              borderRightColor: 'transparent',
-              borderBottomColor: 'yellow',
-              shadowColor: 'yellow',
-              elevation: 20,
-              transform: [
-                { translateX: 1 }, // Center the indicator horizontally
-                { rotate: `${-130 + converted(currentRPM, maxRPM)}deg` }, // Rotation to align with progress
-                { translateY: -57 } // Move the indicator to start from the center
-              ],
-            }} />
-          <Speedo opacity={0.3} color1persentage={180} color2persentage={264} colorsmall1persentage={40} colorsmall2persentage={60} onlyBG={true} />
-          <View className='border-2 border-cyan-200 p-2 z-20 absolute rounded-full items-center justify-center' style={{
-            shadowColor: colorStyle.mainText,
-            shadowOpacity: 0.26,
-            shadowOffset: { width: -1, height: -3 },
-            shadowRadius: 10,
-            elevation: 30,
-            backgroundColor: 'white',
-            width: oneCell * 1.8, height: oneCell * 1.8, backgroundColor: colorStyle.mainBg
-          }}>
-            <Text style={[fontstyles.numlight, { fontSize: 50, marginBottom: -1, color: colorStyle.mainText }]}>{currentRPM}</Text>
-            <Text style={[fontstyles.home, { marginBottom: 1, color: colorStyle.mainText }]}>X1000RPM</Text>
+        <View className=' flex-row' style={{ gap: oneGap * 0.7 }}>
+          <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+            <Recording />
+          </TouchableOpacity>
+          <TouchableOpacity className='gap-x-1 flex-row overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell) * 0.7, width: (3 * oneCell) * 0.7 + 3 * (oneGap * 0.7) }} >
+            {/* <Ionicons name={'medical'} size={29} color={colorStyle.mainText} /> */}
+            <View style={{ backgroundColor: colorStyle.iconBg, transform: [{ rotate: '-45deg' }] }} className=' items-center justify-center h-9 w-9 rounded-full mr-2' >
+              <View style={{ backgroundColor: colorStyle.mainBg, shadowColor: 'white', elevation: 12 }} className=' absolute items-center justify-center h-4 w-4 rounded-full mr-2' />
+              <View>
+                <Ionicons name='musical-note' size={25} color={colorStyle.diffGreen} />
+              </View>
+            </View>
+            <Ionicons name='play-skip-back-circle' size={30} color={colorStyle.mainText} />
+            <Ionicons name={'play-circle'} size={45} color={colorStyle.mainText} />
+            <Ionicons name='play-skip-forward-circle' size={30} color={colorStyle.mainText} />
+            {/* <Recording /> */}
+          </TouchableOpacity>
+          <TouchableOpacity className=' overflow-hidden items-center justify-center' style={{ borderRadius: 12, backgroundColor: colorStyle.subBg, height: (1 * oneCell) * 0.7, width: (1 * oneCell) * 0.7 }} >
+            <AddLocation />
+          </TouchableOpacity>
+        </View>
+        <View className=' justify-end items-end'>
+          <View className=' flex-row items-baseline'>
+            <Text style={[fontstyles.numsmall, { marginBottom: -4, fontSize: 21, color: colorStyle.mainText }]}>{18}</Text>
+            <Text style={{ color: colorStyle.mainText }} className=' text-xl'>°</Text>
+            <Text style={[fontstyles.numsmall, { fontSize: 21, color: colorStyle.mainText }]}>{'C'}</Text>
+            <Text style={[fontstyles.home, { color: colorStyle.subText }]}>    {'10 MPH'}</Text>
           </View>
-
-          <View style={{ backgroundColor: colorStyle.mainBg }} className='absolute flex-row bottom-16 h-10 w-16 z-50' />
-          <View className=' absolute'>
-            <Speedo opacity={1} color1persentage={converted(currentRPM, maxRPM)} color2persentage={converted(currentRPM, maxRPM)} colorsmall1persentage={35} colorsmall2persentage={35} maxSpeed={maxRPM} />
-          </View>
+          <Text style={[fontstyles.home, { color: colorStyle.mainText }]}>{'Cloudy'}</Text>
         </View>
       </View>
-    </View>
+    </>
   );
 };
 

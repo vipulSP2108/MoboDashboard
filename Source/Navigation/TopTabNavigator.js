@@ -12,6 +12,7 @@ import { MusicTracks } from '../Tabs/MusicTracks';
 import { MusicAlbums } from '../Tabs/MusicAlbums';
 import { MusicArtists } from '../Tabs/MusicArtists';
 import { MusicHome } from '../Tabs/MusicHome';
+import MusicSongList from '../Tabs/MusicSongList';
 
 function ScrollableTabBar({ state, descriptors, navigation }) {
     const colorStyle = useColorStyle();
@@ -77,6 +78,9 @@ export default function TopTabNavigator() {
             {/* <Tab.Screen name="Artists"  component={HomeScreen}>
             </Tab.Screen> */}
             <Tab.Screen name="Tracks"  component={MusicTracks}>
+                {/* {() => <Tab.Screen name='MusicFolders' component={MusicFolders} />} */}
+            </Tab.Screen>
+            <Tab.Screen name="All"  component={MusicSongList}>
                 {/* {() => <Tab.Screen name='MusicFolders' component={MusicFolders} />} */}
             </Tab.Screen>
         </Tab.Navigator >
